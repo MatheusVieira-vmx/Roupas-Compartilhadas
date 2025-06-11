@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StyleShare - Criar Conta</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #FF6B8B;
+            --secondary: #6B5B95;
+            --light: #F8F9FA;
+            --dark: #212529;
+            --gray: #6C757D;
+            --light-gray: #E9ECEF;
+            --error: #DC3545;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', sans-serif;
+        }
+        
+        body {
+            background-color: var(--light);
+            color: var(--dark);
+            line-height: 1.6;
+            display: flex;
+            min-height: 100vh;
+        }
+        
+        /* Sidebar */
+        .sidebar {
+            width: 300px;
+            background-color: white;
+            padding: 2rem;
+            box-shadow: 2px 0 15px rgba(0,0,0,0.05);
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            margin-bottom: 3rem;
+        }
+        
+        .logo i {
+            margin-right: 0.5rem;
+        }
+        
+        .illustration {
+            flex-grow: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .illustration img {
+            max-width: 100%;
+            height: auto;
+        }
+        
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            background-color: var(--light);
+        }
+        
+        .register-container {
+            max-width: 500px;
+            width: 100%;
+            background-color: white;
+            border-radius: 15px;
+            padding: 2.5rem;
+            box-shadow: 0 5px 25px rgba(0,0,0,0.08);
+        }
+        
+        .register-header {
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+        
+        .register-title {
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: var(--dark);
+            margin-bottom: 0.5rem;
+        }
+        
+        .register-subtitle {
+            color: var(--gray);
+            font-size: 1rem;
+        }
+        
+        /* Form Styles */
+        .form-group {
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+        
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: var(--dark);
+        }
+        
+        .input-icon {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--gray);
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 0.8rem 1rem 0.8rem 2.5rem;
+            border: 1px solid var(--light-gray);
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+        
+        .form-control:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(255,107,139,0.2);
+            outline: none;
+        }
+        
+        .form-control.error {
+            border-color: var(--error);
+        }
+        
+        .error-message {
+            color: var(--error);
+            font-size: 0.8rem;
+            margin-top: 0.3rem;
+            display: none;
+        }
+        
+        .form-control.error + .error-message {
+            display: block;
+        }
+        
+        /* Address Row */
+        .address-row {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .address-row .form-group {
+            flex: 1;
+        }
+        
+        .address-row .form-group:first-child {
+            flex: 3;
+        }
+        
+        /* Profile Picture Upload */
+        .profile-upload {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .profile-preview {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background-color: var(--light-gray);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 1rem;
+            overflow: hidden;
+        }
+        
+        .profile-preview img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .upload-btn {
+            background-color: white;
+            border: 1px solid var(--primary);
+            color: var(--primary);
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .upload-btn:hover {
+            background-color: rgba(255,107,139,0.1);
+        }
+        
+        .upload-text {
+            font-size: 0.8rem;
+            color: var(--gray);
+            margin-top: 0.3rem;
+        }
+        
+        /* Submit Button */
+        .submit-btn {
+            width: 100%;
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 1rem;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 1rem;
+        }
+        
+        .submit-btn:hover {
+            background-color: #e05a78;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255,107,139,0.3);
+        }
+        
+        .login-link {
+            text-align: center;
+            margin-top: 1.5rem;
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+        
+        .login-link a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 500;
+        }
+        
+        .login-link a:hover {
+            text-decoration: underline;
+        }
+        
+        /* Chat Button */
+        .chat-btn {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            box-shadow: 0 4px 20px rgba(255,107,139,0.3);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            z-index: 999;
+            transition: all 0.3s;
+        }
+        
+        .chat-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 25px rgba(255,107,139,0.4);
+        }
+        
+        /* Responsive */
+        @media (max-width: 992px) {
+            .sidebar {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <div class="logo">
+            <i class="fas fa-tshirt"></i>
+            StyleShare
+        </div>
+        
+        <div class="illustration">
+            <img src="https://cdn-icons-png.flaticon.com/512/3142/3142028.png" alt="Ilustração de moda">
+        </div>
+    </div>
+    
+    <!-- Main Content -->
+    <div class="main-content">
+        <div class="register-container">
+            <div class="register-header">
+                <h1 class="register-title">Crie sua conta</h1>
+                <p class="register-subtitle">Junte-se à nossa comunidade de moda sustentável</p>
+            </div>
+            
+            <form id="register-form">
+                <!-- Profile Picture Upload -->
+                <div class="profile-upload">
+                    <div class="profile-preview">
+                        <i class="fas fa-user" style="color: var(--gray); font-size: 1.5rem;"></i>
+                    </div>
+                    <div>
+                        <button type="button" class="upload-btn">
+                            <i class="fas fa-upload"></i> Enviar foto
+                        </button>
+                        <p class="upload-text">Opcional</p>
+                    </div>
+                </div>
+                
+                <!-- Full Name -->
+                <div class="form-group">
+                    <label for="fullname" class="form-label">Nome completo</label>
+                    <i class="fas fa-user input-icon"></i>
+                    <input type="text" id="fullname" class="form-control" placeholder="Digite seu nome completo" required>
+                    <span class="error-message">Campo obrigatório</span>
+                </div>
+                
+                <!-- Email -->
+                <div class="form-group">
+                    <label for="email" class="form-label">E-mail</label>
+                    <i class="fas fa-envelope input-icon"></i>
+                    <input type="email" id="email" class="form-control" placeholder="Digite seu e-mail" required>
+                    <span class="error-message">Por favor, insira um e-mail válido</span>
+                </div>
+                
+                <!-- Phone -->
+                <div class="form-group">
+                    <label for="phone" class="form-label">Telefone</label>
+                    <i class="fas fa-phone input-icon"></i>
+                    <input type="tel" id="phone" class="form-control" placeholder="(00) 00000-0000" required>
+                    <span class="error-message">Campo obrigatório</span>
+                </div>
+                
+                <!-- Address -->
+                <div class="form-group">
+                    <label for="street" class="form-label">Endereço</label>
+                    <i class="fas fa-map-marker-alt input-icon"></i>
+                    <input type="text" id="street" class="form-control" placeholder="Rua, avenida, etc." required>
+                    <span class="error-message">Campo obrigatório</span>
+                </div>
+                
+                <div class="address-row">
+                    <div class="form-group">
+                        <input type="text" id="number" class="form-control" placeholder="Número" required>
+                        <span class="error-message">Campo obrigatório</span>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" id="city" class="form-control" placeholder="Cidade" required>
+                        <span class="error-message">Campo obrigatório</span>
+                    </div>
+                </div>
+                
+                <div class="address-row">
+                    <div class="form-group">
+                        <input type="text" id="state" class="form-control" placeholder="Estado" required>
+                        <span class="error-message">Campo obrigatório</span>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" id="zipcode" class="form-control" placeholder="CEP" required>
+                        <span class="error-message">Campo obrigatório</span>
+                    </div>
+                </div>
+                
+                <!-- Password -->
+                <div class="form-group">
+                    <label for="password" class="form-label">Senha</label>
+                    <i class="fas fa-lock input-icon"></i>
+                    <input type="password" id="password" class="form-control" placeholder="Crie uma senha" required>
+                    <span class="error-message">A senha deve ter pelo menos 6 caracteres</span>
+                </div>
+                
+                <!-- Confirm Password -->
+                <div class="form-group">
+                    <label for="confirm-password" class="form-label">Confirmar senha</label>
+                    <i class="fas fa-lock input-icon"></i>
+                    <input type="password" id="confirm-password" class="form-control" placeholder="Repita sua senha" required>
+                    <span class="error-message">As senhas não coincidem</span>
+                </div>
+                
+                <!-- Submit Button -->
+                <button type="submit" class="submit-btn">Cadastrar</button>
+                
+                <p class="login-link">Já tem uma conta? <a href="#">Entrar aqui</a></p>
+            </form>
+        </div>
+    </div>
+    
+    <!-- Chat Button -->
+    <button class="chat-btn">
+        <i class="fas fa-comment-dots"></i>
+    </button>
+    
+    <script>
+        // Form Validation
+        const form = document.getElementById('register-form');
+        const inputs = form.querySelectorAll('input[required]');
+        
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            let isValid = true;
+            
+            inputs.forEach(input => {
+                if (!input.value.trim()) {
+                    input.classList.add('error');
+                    isValid = false;
+                } else {
+                    input.classList.remove('error');
+                    
+                    // Specific validations
+                    if (input.id === 'email' && !/^\S+@\S+\.\S+$/.test(input.value)) {
+                        input.classList.add('error');
+                        isValid = false;
+                    }
+                    
+                    if (input.id === 'password' && input.value.length < 6) {
+                        input.classList.add('error');
+                        isValid = false;
+                    }
+                    
+                    if (input.id === 'confirm-password' && input.value !== document.getElementById('password').value) {
+                        input.classList.add('error');
+                        isValid = false;
+                    }
+                }
+            });
+            
+            if (isValid) {
+                alert('Cadastro realizado com sucesso!');
+                form.reset();
+            }
+        });
+        
+        // Input masks
+        document.getElementById('phone').addEventListener('input', function(e) {
+            let value = e.target.value.replace(/\D/g, '');
+            if (value.length > 11) value = value.substring(0, 11);
+            
+            if (value.length > 0) {
+                value = value.replace(/^(\d{2})(\d)/g, '($1) $2');
+                if (value.length > 10) {
+                    value = value.replace(/(\d{5})(\d)/, '$1-$2');
+                } else {
+                    value = value.replace(/(\d{4})(\d)/, '$1-$2');
+                }
+            }
+            
+            e.target.value = value;
+        });
+        
+        document.getElementById('zipcode').addEventListener('input', function(e) {
+            let value = e.target.value.replace(/\D/g, '');
+            if (value.length > 8) value = value.substring(0, 8);
+            
+            if (value.length > 5) {
+                value = value.replace(/^(\d{5})(\d)/, '$1-$2');
+            }
+            
+            e.target.value = value;
+        });
+        
+        // Profile picture upload
+        const uploadBtn = document.querySelector('.upload-btn');
+        const profilePreview = document.querySelector('.profile-preview');
+        
+        uploadBtn.addEventListener('click', function() {
+            const input = document.createElement('input');
+            input.type = 'file';
+            input.accept = 'image/*';
+            
+            input.onchange = function(e) {
+                const file = e.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function(event) {
+                        profilePreview.innerHTML = `<img src="${event.target.result}" alt="Foto de perfil">`;
+                    };
+                    reader.readAsDataURL(file);
+                }
+            };
+            
+            input.click();
+        });
+    </script>
+</body>
+</html>

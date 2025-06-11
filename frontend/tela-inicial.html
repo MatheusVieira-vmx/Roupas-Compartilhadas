@@ -1,0 +1,1063 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StyleShare - Aluguel de Roupas</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #FF6B8B;
+            --secondary: #6B5B95;
+            --light: #F8F9FA;
+            --dark: #212529;
+            --gray: #6C757D;
+            --light-gray: #E9ECEF;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', sans-serif;
+        }
+        
+        body {
+            background-color: var(--light);
+            color: var(--dark);
+            line-height: 1.6;
+        }
+        
+        /* Header */
+        header {
+            background-color: white;
+            padding: 1rem 5%;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.08);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo i {
+            margin-right: 0.5rem;
+        }
+        
+        .search-container {
+            flex: 1;
+            margin: 0 2rem;
+            max-width: 600px;
+            position: relative;
+        }
+        
+        .search-container input {
+            width: 100%;
+            padding: 0.8rem 1.5rem;
+            border: 1px solid var(--light-gray);
+            border-radius: 30px;
+            font-size: 1rem;
+            outline: none;
+            transition: all 0.3s;
+        }
+        
+        .search-container input:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(255,107,139,0.2);
+        }
+        
+        .search-container i {
+            position: absolute;
+            right: 1.2rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--gray);
+        }
+        
+        .nav-actions {
+            display: flex;
+            gap: 1.5rem;
+            align-items: center;
+        }
+        
+        .nav-btn {
+            background: none;
+            border: none;
+            font-size: 1.2rem;
+            cursor: pointer;
+            color: var(--dark);
+            position: relative;
+            transition: all 0.3s;
+            padding: 0.5rem;
+        }
+        
+        .nav-btn:hover {
+            color: var(--primary);
+        }
+        
+        .badge {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background-color: var(--primary);
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            font-size: 0.7rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        /* Hero Carousel */
+        .hero-carousel {
+            width: 100%;
+            height: 500px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .carousel-inner {
+            display: flex;
+            height: 100%;
+            transition: transform 0.5s ease;
+        }
+        
+        .carousel-item {
+            min-width: 100%;
+            position: relative;
+        }
+        
+        .carousel-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .carousel-caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+            color: white;
+            padding: 2rem;
+            max-width: 50%;
+        }
+        
+        .carousel-caption h2 {
+            font-size: 2.2rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .carousel-caption p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            margin-bottom: 1rem;
+        }
+        
+        .carousel-btn {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 30px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .carousel-btn:hover {
+            background-color: #e05a78;
+            transform: translateY(-2px);
+        }
+        
+        .carousel-control {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: rgba(255,255,255,0.8);
+            color: var(--dark);
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            font-size: 1.5rem;
+            cursor: pointer;
+            z-index: 10;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+        }
+        
+        .carousel-control:hover {
+            background-color: white;
+            transform: translateY(-50%) scale(1.1);
+        }
+        
+        .carousel-control.prev {
+            left: 2rem;
+        }
+        
+        .carousel-control.next {
+            right: 2rem;
+        }
+        
+        .carousel-indicators {
+            position: absolute;
+            bottom: 1rem;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 0.5rem;
+        }
+        
+        .indicator {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background-color: rgba(255,255,255,0.5);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .indicator.active {
+            background-color: white;
+            transform: scale(1.2);
+        }
+        
+        /* Main Content */
+        .container {
+            max-width: 1200px;
+            margin: 3rem auto;
+            padding: 0 2rem;
+        }
+        
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--dark);
+        }
+        
+        .see-all {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+        
+        .filter-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            background-color: white;
+            padding: 1rem;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        
+        .filter-btn {
+            background-color: white;
+            border: 1px solid var(--light-gray);
+            padding: 0.7rem 1.2rem;
+            border-radius: 30px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s;
+        }
+        
+        .filter-btn:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+        
+        .filter-btn.active {
+            background-color: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+        
+        .sort-options {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .sort-label {
+            font-size: 0.9rem;
+            color: var(--gray);
+        }
+        
+        .sort-select {
+            border: 1px solid var(--light-gray);
+            padding: 0.5rem;
+            border-radius: 5px;
+            font-size: 0.9rem;
+            cursor: pointer;
+        }
+        
+        /* Products Grid */
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+        
+        .product-card {
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 3px 15px rgba(0,0,0,0.05);
+            transition: all 0.3s;
+            position: relative;
+        }
+        
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+        
+        .product-badge {
+            position: absolute;
+            top: 1rem;
+            left: 1rem;
+            background-color: var(--primary);
+            color: white;
+            padding: 0.3rem 0.7rem;
+            border-radius: 30px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            z-index: 2;
+        }
+        
+        .product-image {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+        
+        .product-card:hover .product-image {
+            transform: scale(1.03);
+        }
+        
+        .product-info {
+            padding: 1.2rem;
+        }
+        
+        .product-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--dark);
+        }
+        
+        .product-description {
+            font-size: 0.9rem;
+            color: var(--gray);
+            margin-bottom: 1rem;
+            display: -webkit-box;
+            webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        
+        .product-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        
+        .product-price {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+        
+        .product-location {
+            font-size: 0.8rem;
+            color: var(--gray);
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+        
+        .product-actions {
+            display: flex;
+            gap: 0.8rem;
+        }
+        
+        .btn {
+            flex: 1;
+            padding: 0.7rem;
+            border-radius: 5px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+        
+        .btn-outline {
+            background-color: white;
+            border: 1px solid var(--primary);
+            color: var(--primary);
+        }
+        
+        .btn-outline:hover {
+            background-color: rgba(255,107,139,0.1);
+        }
+        
+        .btn-primary {
+            background-color: var(--primary);
+            border: 1px solid var(--primary);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background-color: #e05a78;
+            border-color: #e05a78;
+        }
+        
+        /* Chat Button */
+        .chat-btn {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            box-shadow: 0 4px 20px rgba(255,107,139,0.3);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            z-index: 999;
+            transition: all 0.3s;
+        }
+        
+        .chat-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 25px rgba(255,107,139,0.4);
+        }
+        
+        /* Filter Modal */
+        .filter-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            z-index: 1001;
+            display: none;
+            justify-content: center;
+            align-items: flex-start;
+            padding-top: 5rem;
+        }
+        
+        .filter-modal.active {
+            display: flex;
+        }
+        
+        .filter-content {
+            background-color: white;
+            width: 90%;
+            max-width: 800px;
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: 0 5px 30px rgba(0,0,0,0.2);
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+        
+        .filter-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .filter-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+        
+        .close-filter {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--gray);
+        }
+        
+        .filter-section {
+            margin-bottom: 2rem;
+        }
+        
+        .filter-section-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--dark);
+        }
+        
+        .filter-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+        }
+        
+        .filter-option {
+            background-color: white;
+            border: 1px solid var(--light-gray);
+            padding: 0.6rem 1.2rem;
+            border-radius: 30px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .filter-option:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+        
+        .filter-option.active {
+            background-color: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+        
+        .price-range {
+            width: 100%;
+            margin-top: 1rem;
+        }
+        
+        .price-values {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 0.5rem;
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+        
+        .filter-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+        
+        .btn-secondary {
+            background-color: var(--light-gray);
+            border: 1px solid var(--light-gray);
+            color: var(--dark);
+        }
+        
+        .btn-secondary:hover {
+            background-color: #e2e6ea;
+            border-color: #e2e6ea;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="logo">
+            <i class="fas fa-tshirt"></i>
+            StyleShare
+        </div>
+        
+        <div class="search-container">
+            <input type="text" placeholder="Busque por vestidos, ternos, acessórios...">
+            <i class="fas fa-search"></i>
+        </div>
+        
+        <div class="nav-actions">
+            <button class="nav-btn">
+                <i class="far fa-user"></i>
+            </button>
+            <button class="nav-btn">
+                <i class="far fa-heart"></i>
+            </button>
+            <button class="nav-btn">
+                <i class="fas fa-shopping-bag"></i>
+                <span class="badge">3</span>
+            </button>
+        </div>
+    </header>
+    
+    <!-- Hero Carousel -->
+    <div class="hero-carousel">
+        <div class="carousel-inner">
+            <div class="carousel-item">
+                <img src="https://images.unsplash.com/photo-1539109136881-3be0616acf4b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Vestido de festa">
+                <div class="carousel-caption">
+                    <h2>Vestidos de Festa Incríveis</h2>
+                    <p>Alugue looks deslumbrantes para sua ocasião especial</p>
+                    <button class="carousel-btn">Ver coleção</button>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <img src="https://images.unsplash.com/photo-1489987707025-afc232f7ea0f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Roupas masculinas">
+                <div class="carousel-caption">
+                    <h2>Estilo Masculino Premium</h2>
+                    <p>Ternos e trajes elegantes para alugar</p>
+                    <button class="carousel-btn">Descobrir looks</button>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <img src="https://images.unsplash.com/photo-1551232864-3f0890e580d9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D3D%3D&auto=format&fit=crop&w=1374&q=80" alt="Acessórios">
+                <div class="carousel-caption">
+                    <h2>Acessórios Exclusivos</h2>
+                    <p>Complete seu look com peças únicas</p>
+                    <button class="carousel-btn">Explorar acessórios</button>
+                </div>
+            </div>
+        </div>
+        
+        <button class="carousel-control prev">
+            <i class="fas fa-chevron-left"></i>
+        </button>
+        <button class="carousel-control next">
+            <i class="fas fa-chevron-right"></i>
+        </button>
+        
+        <div class="carousel-indicators">
+            <div class="indicator active"></div>
+            <div class="indicator"></div>
+            <div class="indicator"></div>
+        </div>
+    </div>
+    
+    <!-- Main Content -->
+    <div class="container">
+        <div class="section-header">
+            <h2 class="section-title">Roupas em destaque na sua região</h2>
+            <a href="#" class="see-all">
+                Ver tudo
+                <i class="fas fa-chevron-right"></i>
+            </a>
+        </div>
+        
+        <!-- Filter Bar -->
+        <div class="filter-bar">
+            <div class="filter-options">
+                <button class="filter-btn" id="open-filter">
+                    <i class="fas fa-sliders-h"></i>
+                    Filtros
+                </button>
+                <button class="filter-btn active">
+                    Todos
+                </button>
+                <button class="filter-btn">
+                    Vestidos
+                </button>
+                <button class="filter-btn">
+                    Ternos
+                </button>
+                <button class="filter-btn">
+                    Fantasias
+                </button>
+                <button class="filter-btn">
+                    Acessórios
+                </button>
+            </div>
+            
+            <div class="sort-options">
+                <span class="sort-label">Ordenar por:</span>
+                <select class="sort-select">
+                    <option>Relevância</option>
+                    <option>Preço: menor primeiro</option>
+                    <option>Preço: maior primeiro</option>
+                    <option>Mais próximos</option>
+                    <option>Melhores avaliações</option>
+                </select>
+            </div>
+        </div>
+        
+        <!-- Products Grid -->
+        <div class="products-grid">
+            <!-- Product 1 -->
+            <div class="product-card">
+                <span class="product-badge">Novo</span>
+                <img src="https://images.unsplash.com/photo-1591047139829-d91aecb6caea?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=736&q=80" alt="Vestido longo vermelho" class="product-image">
+                <div class="product-info">
+                    <h3 class="product-title">Vestido Longo Vermelho</h3>
+                    <p class="product-description">Vestido de festa em cetim com detalhes em renda. Ideal para formaturas e casamentos.</p>
+                    <div class="product-meta">
+                        <span class="product-price">R$ 89/dia</span>
+                        <span class="product-location">
+                            <i class="fas fa-map-marker-alt"></i>
+                            1,2 km
+                        </span>
+                    </div>
+                    <div class="product-actions">
+                        <button class="btn btn-outline">
+                            <i class="fas fa-shopping-cart"></i>
+                            Carrinho
+                        </button>
+                        <button class="btn btn-primary">
+                            Alugar
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Product 2 -->
+            <div class="product-card">
+                <img src="https://images.unsplash.com/photo-1539533018447-63fcce2678e4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80" alt="Terno slim preto" class="product-image">
+                <div class="product-info">
+                    <h3 class="product-title">Terno Slim Preto</h3>
+                    <p class="product-description">Terno moderno em lã premium. Inclui paletó, calça e cinto.</p>
+                    <div class="product-meta">
+                        <span class="product-price">R$ 120/dia</span>
+                        <span class="product-location">
+                            <i class="fas fa-map-marker-alt"></i>
+                            0,8 km
+                        </span>
+                    </div>
+                    <div class="product-actions">
+                        <button class="btn btn-outline">
+                            <i class="fas fa-shopping-cart"></i>
+                            Carrinho
+                        </button>
+                        <button class="btn btn-primary">
+                            Alugar
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Product 3 -->
+            <div class="product-card">
+                <span class="product-badge">Popular</span>
+                <img src="https://images.unsplash.com/photo-1551232864-3f0890e580d9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1374&q=80" alt="Bolsa de luxo" class="product-image">
+                <div class="product-info">
+                    <h3 class="product-title">Bolsa de Luxo Dourada</h3>
+                    <p class="product-description">Bolsa designer em couro legítimo com detalhes em metal dourado.</p>
+                    <div class="product-meta">
+                        <span class="product-price">R$ 65/dia</span>
+                        <span class="product-location">
+                            <i class="fas fa-map-marker-alt"></i>
+                            2,1 km
+                        </span>
+                    </div>
+                    <div class="product-actions">
+                        <button class="btn btn-outline">
+                            <i class="fas fa-shopping-cart"></i>
+                            Carrinho
+                        </button>
+                        <button class="btn btn-primary">
+                            Alugar
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Product 4 -->
+            <div class="product-card">
+                <img src="https://images.unsplash.com/photo-1591047139829-d91aecb6caea?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=736&q=80" alt="Vestido floral" class="product-image">
+                <div class="product-info">
+                    <h3 class="product-title">Vestido Floral Midi</h3>
+                    <p class="product-description">Vestido leve para verão com estampa floral e corte evasê. Perfeito para festas ao ar livre.</p>
+                    <div class="product-meta">
+                        <span class="product-price">R$ 55/dia</span>
+                        <span class="product-location">
+                            <i class="fas fa-map-marker-alt"></i>
+                            1,5 km
+                        </span>
+                    </div>
+                    <div class="product-actions">
+                        <button class="btn btn-outline">
+                            <i class="fas fa-shopping-cart"></i>
+                            Carrinho
+                        </button>
+                        <button class="btn btn-primary">
+                            Alugar
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Product 5 -->
+            <div class="product-card">
+                <img src="https://images.unsplash.com/photo-1591047139829-d91aecb6caea?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=736&q=80" alt="Conjunto esportivo" class="product-image">
+                <div class="product-info">
+                    <h3 class="product-title">Conjunto Esportivo Premium</h3>
+                    <p class="product-description">Conjunto em dry fit para treinos de alta performance. Disponível em vários tamanhos.</p>
+                    <div class="product-meta">
+                        <span class="product-price">R$ 40/dia</span>
+                        <span class="product-location">
+                            <i class="fas fa-map-marker-alt"></i>
+                            0,5 km
+                        </span>
+                    </div>
+                    <div class="product-actions">
+                        <button class="btn btn-outline">
+                            <i class="fas fa-shopping-cart"></i>
+                            Carrinho
+                        </button>
+                        <button class="btn btn-primary">
+                            Alugar
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Product 6 -->
+            <div class="product-card">
+                <span class="product-badge">Promoção</span>
+                <img src="https://images.unsplash.com/photo-1591047139829-d91aecb6caea?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=736&q=80" alt="Fantasia anos 80" class="product-image">
+                <div class="product-info">
+                    <h3 class="product-title">Fantasia Anos 80 Completa</h3>
+                    <p class="product-description">Kit completo para festas à tema. Inclui peruca, óculos e acessórios.</p>
+                    <div class="product-meta">
+                        <span class="product-price">R$ 75/dia</span>
+                        <span class="product-location">
+                            <i class="fas fa-map-marker-alt"></i>
+                            3,2 km
+                        </span>
+                    </div>
+                    <div class="product-actions">
+                        <button class="btn btn-outline">
+                            <i class="fas fa-shopping-cart"></i>
+                            Carrinho
+                        </button>
+                        <button class="btn btn-primary">
+                            Alugar
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Chat Button -->
+    <button class="chat-btn">
+        <i class="fas fa-comment-dots"></i>
+    </button>
+    
+    <!-- Filter Modal -->
+    <div class="filter-modal" id="filter-modal">
+        <div class="filter-content">
+            <div class="filter-header">
+                <h3 class="filter-title">Filtrar itens</h3>
+                <button class="close-filter" id="close-filter">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <div class="filter-section">
+                <h4 class="filter-section-title">Categorias</h4>
+                <div class="filter-options">
+                    <button class="filter-option active">Todos</button>
+                    <button class="filter-option">Vestidos</button>
+                    <button class="filter-option">Ternos</button>
+                    <button class="filter-option">Blusas</button>
+                    <button class="filter-option">Calças</button>
+                    <button class="filter-option">Saias</button>
+                    <button class="filter-option">Fantasias</button>
+                    <button class="filter-option">Acessórios</button>
+                    <button class="filter-option">Calçados</button>
+                </div>
+            </div>
+            
+            <div class="filter-section">
+                <h4 class="filter-section-title">Tamanhos</h4>
+                <div class="filter-options">
+                    <button class="filter-option">PP</button>
+                    <button class="filter-option">P</button>
+                    <button class="filter-option active">M</button>
+                    <button class="filter-option">G</button>
+                    <button class="filter-option">GG</button>
+                    <button class="filter-option">Único</button>
+                </div>
+            </div>
+            
+            <div class="filter-section">
+                <h4 class="filter-section-title">Faixa de preço</h4>
+                <input type="range" min="0" max="500" value="200" class="price-range">
+                <div class="price-values">
+                    <span>R$ 0</span>
+                    <span>R$ 500</span>
+                </div>
+            </div>
+            
+            <div class="filter-section">
+                <h4 class="filter-section-title">Localização</h4>
+                <div class="filter-options">
+                    <button class="filter-option active">Qualquer distância</button>
+                    <button class="filter-option">Até 1 km</button>
+                    <button class="filter-option">Até 3 km</button>
+                    <button class="filter-option">Até 5 km</button>
+                </div>
+            </div>
+            
+            <div class="filter-actions">
+                <button class="btn btn-secondary" id="reset-filters">
+                    Limpar filtros
+                </button>
+                <button class="btn btn-primary" id="apply-filters">
+                    Aplicar filtros
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Carousel functionality
+        const carousel = document.querySelector('.carousel-inner');
+        const items = document.querySelectorAll('.carousel-item');
+        const indicators = document.querySelectorAll('.indicator');
+        let currentIndex = 0;
+        const itemCount = items.length;
+        
+        function updateCarousel() {
+            carousel.style.transform = `translateX(-${currentIndex * 100}%)`;
+            
+            // Update indicators
+            indicators.forEach((indicator, index) => {
+                if (index === currentIndex) {
+                    indicator.classList.add('active');
+                } else {
+                    indicator.classList.remove('active');
+                }
+            });
+        }
+        
+        // Auto-rotate carousel
+        let carouselInterval = setInterval(() => {
+            currentIndex = (currentIndex + 1) % itemCount;
+            updateCarousel();
+        }, 5000);
+        
+        // Manual controls
+        document.querySelector('.prev').addEventListener('click', () => {
+            clearInterval(carouselInterval);
+            currentIndex = (currentIndex - 1 + itemCount) % itemCount;
+            updateCarousel();
+            carouselInterval = setInterval(() => {
+                currentIndex = (currentIndex + 1) % itemCount;
+                updateCarousel();
+            }, 5000);
+        });
+        
+        document.querySelector('.next').addEventListener('click', () => {
+            clearInterval(carouselInterval);
+            currentIndex = (currentIndex + 1) % itemCount;
+            updateCarousel();
+            carouselInterval = setInterval(() => {
+                currentIndex = (currentIndex + 1) % itemCount;
+                updateCarousel();
+            }, 5000);
+        });
+        
+        // Click on indicators
+        indicators.forEach((indicator, index) => {
+            indicator.addEventListener('click', () => {
+                clearInterval(carouselInterval);
+                currentIndex = index;
+                updateCarousel();
+                carouselInterval = setInterval(() => {
+                    currentIndex = (currentIndex + 1) % itemCount;
+                    updateCarousel();
+                }, 5000);
+            });
+        });
+        
+        // Filter modal functionality
+        const filterModal = document.getElementById('filter-modal');
+        const openFilterBtn = document.getElementById('open-filter');
+        const closeFilterBtn = document.getElementById('close-filter');
+        const applyFiltersBtn = document.getElementById('apply-filters');
+        const resetFiltersBtn = document.getElementById('reset-filters');
+        
+        openFilterBtn.addEventListener('click', () => {
+            filterModal.classList.add('active');
+        });
+        
+        closeFilterBtn.addEventListener('click', () => {
+            filterModal.classList.remove('active');
+        });
+        
+        applyFiltersBtn.addEventListener('click', () => {
+            filterModal.classList.remove('active');
+            // Here you would typically apply the filters to your product list
+            // For the demo, we'll just show an alert
+            alert('Filtros aplicados com sucesso!');
+        });
+        
+        resetFiltersBtn.addEventListener('click', () => {
+            // Reset all filter options
+            document.querySelectorAll('.filter-option.active').forEach(option => {
+                if (!option.textContent.includes('Todos') && !option.textContent.includes('Qualquer')) {
+                    option.classList.remove('active');
+                }
+                        // Toggle filter options
+        document.querySelectorAll('.filter-option').forEach(option => {
+            option.addEventListener('click', function() {
+                // For category filters, only allow one active at a time
+                if (this.parentElement.previousElementSibling.textContent === 'Categorias') {
+                    this.parentElement.querySelectorAll('.filter-option').forEach(opt => {
+                        opt.classList.remove('active');
+                    });
+                }
+                this.classList.toggle('active');
+            });
+        });
+
+        // Close modal when clicking outside
+        filterModal.addEventListener('click', (e) => {
+            if (e.target === filterModal) {
+                filterModal.classList.remove('active');
+            }
+        });
+
+        // Product card hover effects
+        document.querySelectorAll('.product-card').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.querySelector('.product-image').style.transform = 'scale(1.03)';
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.querySelector('.product-image').style.transform = 'scale(1)';
+            });
+        });
+    </script>
+</body>
+</html>   
