@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meu Perfil - Aluguel de Roupas</title>
+    <style>
+        :root {
+            --primary: #6a5acd;
+            --primary-light: #9370db;
+            --secondary: #ff69b4;
+            --dark: #333;
+            --light: #f8f9fa;
+            --gray: #6c757d;
+            --danger: #dc3545;
+            --border: #e0e0e0;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f5f5;
+            color: var(--dark);
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        header h1 {
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+        
+        .profile-container {
+            background: white;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .profile-header {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        
+        .profile-picture {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid var(--primary);
+            margin-bottom: 15px;
+        }
+        
+        .profile-name {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+        
+        .profile-email {
+            color: var(--gray);
+            margin-bottom: 15px;
+        }
+        
+        .edit-profile-btn {
+            padding: 8px 16px;
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .edit-profile-btn:hover {
+            background-color: var(--primary-light);
+        }
+        
+        .profile-sections {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+        }
+        
+        @media (min-width: 600px) {
+            .profile-sections {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+        
+        .profile-section {
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            padding: 20px;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .profile-section:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .section-title {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            color: var(--primary);
+        }
+        
+        .section-title i {
+            font-size: 20px;
+            margin-right: 10px;
+        }
+        
+        .section-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid var(--border);
+        }
+        
+        .section-item:last-child {
+            border-bottom: none;
+        }
+        
+        .item-label {
+            font-weight: 500;
+        }
+        
+        .item-value {
+            color: var(--gray);
+        }
+        
+        .item-action {
+            color: var(--primary);
+            text-decoration: none;
+            font-size: 14px;
+            cursor: pointer;
+        }
+        
+        .item-action:hover {
+            text-decoration: underline;
+        }
+        
+        .logout-btn {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            background-color: var(--danger);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin-top: 30px;
+            text-align: center;
+            text-decoration: none;
+        }
+        
+        .logout-btn:hover {
+            background-color: #c82333;
+        }
+        
+        /* Modal de edição */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            animation: fadeIn 0.3s;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        .modal-content {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            max-width: 500px;
+            width: 90%;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            transform: translateY(0);
+            animation: slideIn 0.3s;
+        }
+        
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .modal-title {
+            font-size: 20px;
+            color: var(--primary);
+        }
+        
+        .close-modal {
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: var(--gray);
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid var(--border);
+            border-radius: 5px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+        
+        .form-control:focus {
+            border-color: var(--primary);
+            outline: none;
+        }
+        
+        .modal-footer {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        
+        .modal-btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .modal-btn-primary {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        .modal-btn-primary:hover {
+            background-color: var(--primary-light);
+        }
+        
+        .modal-btn-secondary {
+            background-color: var(--light);
+            color: var(--dark);
+        }
+        
+        .modal-btn-secondary:hover {
+            background-color: #e0e0e0;
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Meu Perfil</h1>
+            <p>Gerencie suas informações e configurações</p>
+        </header>
+        
+        <div class="profile-container">
+            <div class="profile-header">
+                <img src="https://via.placeholder.com/120x120?text=Usuário" alt="Foto do perfil" class="profile-picture" id="profilePicture">
+                <h2 class="profile-name" id="profileName">Maria da Silva</h2>
+                <p class="profile-email" id="profileEmail">maria.silva@exemplo.com</p>
+                <button class="edit-profile-btn" id="editProfileBtn">Editar Perfil</button>
+            </div>
+            
+            <div class="profile-sections">
+                <div class="profile-section">
+                    <div class="section-title">
+                        <i class="fas fa-user-shield"></i>
+                        <h3>Privacidade</h3>
+                    </div>
+                    <div class="section-item">
+                        <span class="item-label">Perfil público</span>
+                        <label class="switch">
+                            <input type="checkbox" checked>
+                            <span class="slider round"></span>
+                        </label>
+                    </div>
+                    <div class="section-item">
+                        <span class="item-label">Mostrar e-mail</span>
+                        <label class="switch">
+                            <input type="checkbox">
+                            <span class="slider round"></span>
+                        </label>
+                    </div>
+                    <div class="section-item">
+                        <span class="item-label">Compartilhar dados</span>
+                        <label class="switch">
+                            <input type="checkbox">
+                            <span class="slider round"></span>
+                        </label>
+                    </div>
+                </div>
+                
+                <div class="profile-section">
+                    <div class="section-title">
+                        <i class="fas fa-key"></i>
+                        <h3>Alterar Senha</h3>
+                    </div>
+                    <div class="section-item">
+                        <span class="item-label">Senha atual</span>
+                        <span class="item-value">••••••••</span>
+                    </div>
+                    <div class="section-item">
+                        <span class="item-label">Alterar senha</span>
+                        <a class="item-action" id="changePasswordBtn">Alterar</a>
+                    </div>
+                    <div class="section-item">
+                        <span class="item-label">Autenticação</span>
+                        <a class="item-action" id="setup2faBtn">Configurar 2FA</a>
+                    </div>
+                </div>
+                
+                <div class="profile-section">
+                    <div class="section-title">
+                        <i class="fas fa-shield-alt"></i>
+                        <h3>Segurança</h3>
+                    </div>
+                    <div class="section-item">
+                        <span class="item-label">Sessões ativas</span>
+                        <span class="item-value">2 dispositivos</span>
+                    </div>
+                    <div class="section-item">
+                        <span class="item-label">Verificação</span>
+                        <a class="item-action" id="verifyAccountBtn">Verificar conta</a>
+                    </div>
+                    <div class="section-item">
+                        <span class="item-label">Histórico</span>
+                        <a class="item-action" id="viewHistoryBtn">Visualizar</a>
+                    </div>
+                </div>
+                
+                <div class="profile-section">
+                    <div class="section-title">
+                        <i class="fas fa-bell"></i>
+                        <h3>Notificações</h3>
+                    </div>
+                    <div class="section-item">
+                        <span class="item-label">E-mail</span>
+                        <label class="switch">
+                            <input type="checkbox" checked>
+                            <span class="slider round"></span>
+                        </label>
+                    </div>
+                    <div class="section-item">
+                        <span class="item-label">Push</span>
+                        <label class="switch">
+                            <input type="checkbox" checked>
+                            <span class="slider round"></span>
+                        </label>
+                    </div>
+                    <div class="section-item">
+                        <span class="item-label">SMS</span>
+                        <label class="switch">
+                            <input type="checkbox">
+                            <span class="slider round"></span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+            
+            <a href="login.html" class="logout-btn">
+                <i class="fas fa-sign-out-alt"></i> Sair
+            </a>
+        </div>
+    </div>
+    
+    <!-- Modal de Edição de Perfil -->
+    <div class="modal-overlay" id="editProfileModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Editar Perfil</h3>
+                <button class="close-modal" id="closeEditModal">&times;</button>
+            </div>
+            
+            <div class="form-group">
+                <label for="editName">Nome completo</label>
+                <input type="text" id="editName" class="form-control" value="Maria da Silva">
+            </div>
+            
+            <div class="form-group">
+                <label for="editEmail">E-mail</label>
+                <input type="email" id="editEmail" class="form-control" value="maria.silva@exemplo.com">
+            </div>
+            
+            <div class="form-group">
+                <label for="editPhoto">Foto do perfil</label>
+                <input type="file" id="editPhoto" class="form-control">
+            </div>
+            
+            <div class="modal-footer">
+                <button class="modal-btn modal-btn-secondary" id="cancelEditBtn">Cancelar</button>
+                <button class="modal-btn modal-btn-primary" id="saveProfileBtn">Salvar</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Modal de Alteração de Senha -->
+    <div class="modal-overlay" id="changePasswordModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Alterar Senha</h3>
+                <button class="close-modal" id="closePasswordModal">&times;</button>
+            </div>
+            
+            <div class="form-group">
+                <label for="currentPassword">Senha atual</label>
+                <input type="password" id="currentPassword" class="form-control" placeholder="Digite sua senha atual">
+            </div>
+            
+            <div class="form-group">
+                <label for="newPassword">Nova senha</label>
+                <input type="password" id="newPassword" class="form-control" placeholder="Digite sua nova senha">
+            </div>
+            
+            <div class="form-group">
+                <label for="confirmPassword">Confirmar nova senha</label>
+                <input type="password" id="confirmPassword" class="form-control" placeholder="Confirme sua nova senha">
+            </div>
+            
+            <div class="modal-footer">
+                <button class="modal-btn modal-btn-secondary" id="cancelPasswordBtn">Cancelar</button>
+                <button class="modal-btn modal-btn-primary" id="savePasswordBtn">Alterar Senha</button>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Elementos do DOM
+            const editProfileBtn = document.getElementById('editProfileBtn');
+            const changePasswordBtn = document.getElementById('changePasswordBtn');
+            const logoutBtn = document.querySelector('.logout-btn');
+            
+            // Modais
+            const editProfileModal = document.getElementById('editProfileModal');
+            const changePasswordModal = document.getElementById('changePasswordModal');
+            
+            // Botões de fechar modal
+            const closeEditModal = document.getElementById('closeEditModal');
+            const closePasswordModal = document.getElementById('closePasswordModal');
+            const cancelEditBtn = document.getElementById('cancelEditBtn');
+            const cancelPasswordBtn = document.getElementById('cancelPasswordBtn');
+            
+            // Botões de salvar
+            const saveProfileBtn = document.getElementById('saveProfileBtn');
+            const savePasswordBtn = document.getElementById('savePasswordBtn');
+            
+            // Campos de perfil
+            const profileName = document.getElementById('profileName');
+            const profileEmail = document.getElementById('profileEmail');
+            const profilePicture = document.getElementById('profilePicture');
+            
+            // Campos de edição
+            const editName = document.getElementById('editName');
+            const editEmail = document.getElementById('editEmail');
+            const editPhoto = document.getElementById('editPhoto');
+            
+            // Abrir modal de edição de perfil
+            editProfileBtn.addEventListener('click', function() {
+                editProfileModal.style.display = 'flex';
+            });
+            
+            // Abrir modal de alteração de senha
+            changePasswordBtn.addEventListener('click', function() {
+                changePasswordModal.style.display = 'flex';
+            });
+            
+            // Fechar modais
+            function closeAllModals() {
+                editProfileModal.style.display = 'none';
+                changePasswordModal.style.display = 'none';
+            }
+            
+            closeEditModal.addEventListener('click', closeAllModals);
+            closePasswordModal.addEventListener('click', closeAllModals);
+            cancelEditBtn.addEventListener('click', closeAllModals);
+            cancelPasswordBtn.addEventListener('click', closeAllModals);
+            
+            // Fechar modal ao clicar fora
+            window.addEventListener('click', function(event) {
+                if (event.target === editProfileModal) {
+                    editProfileModal.style.display = 'none';
+                }
+                if (event.target === changePasswordModal) {
+                    changePasswordModal.style.display = 'none';
+                }
+            });
+            
+            // Fechar modal ao pressionar ESC
+            document.addEventListener('keydown', function(event) {
+                if (event.key === 'Escape') {
+                    closeAllModals();
+                }
+            });
+            
+            // Salvar perfil
+            saveProfileBtn.addEventListener('click', function() {
+                profileName.textContent = editName.value;
+                profileEmail.textContent = editEmail.value;
+                
+                // Simular upload de foto
+                if (editPhoto.files && editPhoto.files[0]) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        profilePicture.src = e.target.result;
+                    };
+                    reader.readAsDataURL(editPhoto.files[0]);
+                }
+                
+                closeAllModals();
+                alert('Perfil atualizado com sucesso!');
+            });
+            
+            // Alterar senha
+            savePasswordBtn.addEventListener('click', function() {
+                const currentPassword = document.getElementById('currentPassword').value;
+                const newPassword = document.getElementById('newPassword').value;
+                const confirmPassword = document.getElementById('confirmPassword').value;
+                
+                if (newPassword !== confirmPassword) {
+                    alert('As senhas não coincidem!');
+                    return;
+                }
+                
+                if (newPassword.length < 6) {
+                    alert('A senha deve ter pelo menos 6 caracteres!');
+                    return;
+                }
+                
+                // Simular alteração de senha
+                closeAllModals();
+                alert('Senha alterada com sucesso!');
+                
+                // Limpar campos
+                document.getElementById('currentPassword').value = '';
+                document.getElementById('newPassword').value = '';
+                document.getElementById('confirmPassword').value = '';
+            });
+            
+            // Logout
+            logoutBtn.addEventListener('click', function(e) {
+                if (!confirm('Deseja realmente sair?')) {
+                    e.preventDefault();
+                }
+            });
+        });
+    </script>
+</body>
+</html>
