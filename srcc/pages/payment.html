@@ -1,745 +1,320 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Pagamento - Aluguel de Roupas</title>
-    <style>
-        :root {
-            --primary: #6a5acd;
-            --primary-light: #9370db;
-            --secondary: #ff69b4;
-            --dark: #333;
-            --light: #f8f9fa;
-            --gray: #6c757d;
-            --success: #28a745;
-            --pix: #32BCAD;
-            --boleto: #FF7F00;
-        }
-        
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-        
-        body {
-            background-color: #f5f5f5;
-            color: var(--dark);
-            line-height: 1.6;
-        }
-        
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-        
-        header {
-            text-align: center;
-            margin-bottom: 30px;
-        }
-        
-        header h1 {
-            color: var(--primary);
-            margin-bottom: 10px;
-        }
-        
-        .checkout-container {
-            display: flex;
-            flex-direction: column;
-            gap: 30px;
-        }
-        
-        @media (min-width: 768px) {
-            .checkout-container {
-                flex-direction: row;
-            }
-        }
-        
-        .order-summary {
-            background: white;
-            border-radius: 10px;
-            padding: 20px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            flex: 1;
-        }
-        
-        .order-summary h2 {
-            color: var(--primary);
-            margin-bottom: 20px;
-            padding-bottom: 10px;
-            border-bottom: 1px solid #eee;
-        }
-        
-        .order-items {
-            margin-bottom: 20px;
-        }
-        
-        .order-item {
-            display: flex;
-            gap: 15px;
-            margin-bottom: 15px;
-            padding-bottom: 15px;
-            border-bottom: 1px solid #eee;
-        }
-        
-        .order-item:last-child {
-            border-bottom: none;
-        }
-        
-        .item-image {
-            width: 80px;
-            height: 80px;
-            border-radius: 5px;
-            object-fit: cover;
-        }
-        
-        .item-details {
-            flex: 1;
-        }
-        
-        .item-name {
-            font-weight: 600;
-            margin-bottom: 5px;
-        }
-        
-        .item-price {
-            color: var(--primary);
-            font-weight: 600;
-        }
-        
-        .item-period {
-            font-size: 0.9em;
-            color: var(--gray);
-        }
-        
-        .order-total {
-            margin-top: 20px;
-            padding-top: 20px;
-            border-top: 1px solid #eee;
-        }
-        
-        .total-row {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 10px;
-        }
-        
-        .total-row:last-child {
-            font-weight: 700;
-            font-size: 1.1em;
-        }
-        
-        .payment-form-container {
-            background: white;
-            border-radius: 10px;
-            padding: 20px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            flex: 1;
-        }
-        
-        .payment-methods {
-            margin-bottom: 20px;
-        }
-        
-        .payment-methods h3 {
-            margin-bottom: 15px;
-            color: var(--dark);
-        }
-        
-        .payment-options {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-        
-        .payment-option {
-            display: flex;
-            align-items: center;
-            padding: 12px 15px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-        
-        .payment-option:hover {
-            border-color: var(--primary);
-        }
-        
-        .payment-option.active {
-            border-color: var(--primary);
-            background-color: rgba(106, 90, 205, 0.05);
-        }
-        
-        .payment-option input {
-            margin-right: 10px;
-        }
-        
-        .payment-option .icon {
-            width: 30px;
-            margin-right: 10px;
-        }
-        
-        .payment-option .text {
-            flex: 1;
-        }
-        
-        .payment-option .text h4 {
-            margin-bottom: 3px;
-        }
-        
-        .payment-option .text p {
-            font-size: 0.8em;
-            color: var(--gray);
-        }
-        
-        .payment-form {
-            display: none;
-        }
-        
-        .payment-form.active {
-            display: block;
-        }
-        
-        .payment-form h2 {
-            color: var(--primary);
-            margin-bottom: 20px;
-            padding-bottom: 10px;
-            border-bottom: 1px solid #eee;
-        }
-        
-        .form-group {
-            margin-bottom: 20px;
-        }
-        
-        .form-group label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: 500;
-        }
-        
-        .form-control {
-            width: 100%;
-            padding: 12px 15px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            font-size: 16px;
-            transition: border-color 0.3s;
-        }
-        
-        .form-control:focus {
-            border-color: var(--primary);
-            outline: none;
-        }
-        
-        .card-number-container {
-            position: relative;
-        }
-        
-        .card-icons {
-            position: absolute;
-            right: 10px;
-            top: 50%;
-            transform: translateY(-50%);
-            display: flex;
-            gap: 5px;
-        }
-        
-        .card-icon {
-            width: 30px;
-            opacity: 0.3;
-        }
-        
-        .card-icon.active {
-            opacity: 1;
-        }
-        
-        .form-row {
-            display: flex;
-            gap: 15px;
-        }
-        
-        .form-row .form-group {
-            flex: 1;
-        }
-        
-        .pix-instructions {
-            text-align: center;
-            padding: 20px;
-            background-color: rgba(50, 188, 173, 0.1);
-            border-radius: 8px;
-            margin-bottom: 20px;
-        }
-        
-        .pix-instructions .icon {
-            font-size: 50px;
-            color: var(--pix);
-            margin-bottom: 15px;
-        }
-        
-        .pix-instructions h3 {
-            color: var(--pix);
-            margin-bottom: 10px;
-        }
-        
-        .pix-qrcode {
-            width: 200px;
-            height: 200px;
-            margin: 0 auto 15px;
-            background-color: white;
-            padding: 10px;
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        
-        .pix-qrcode img {
-            max-width: 100%;
-            max-height: 100%;
-        }
-        
-        .boleto-instructions {
-            text-align: center;
-            padding: 20px;
-            background-color: rgba(255, 127, 0, 0.1);
-            border-radius: 8px;
-            margin-bottom: 20px;
-        }
-        
-        .boleto-instructions .icon {
-            font-size: 50px;
-            color: var(--boleto);
-            margin-bottom: 15px;
-        }
-        
-        .boleto-instructions h3 {
-            color: var(--boleto);
-            margin-bottom: 10px;
-        }
-        
-        .boleto-barcode {
-            width: 100%;
-            height: 60px;
-            margin: 0 auto 15px;
-            background-color: white;
-            padding: 10px;
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-family: 'Libre Barcode 128', cursive;
-            font-size: 40px;
-            letter-spacing: 2px;
-        }
-        
-        .btn {
-            display: inline-block;
-            padding: 12px 24px;
-            background-color: var(--primary);
-            color: white;
-            border: none;
-            border-radius: 5px;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: background-color 0.3s;
-            width: 100%;
-        }
-        
-        .btn:hover {
-            background-color: var(--primary-light);
-        }
-        
-        .btn-pix {
-            background-color: var(--pix);
-        }
-        
-        .btn-pix:hover {
-            background-color: #2aa89a;
-        }
-        
-        .btn-boleto {
-            background-color: var(--boleto);
-        }
-        
-        .btn-boleto:hover {
-            background-color: #e67300;
-        }
-        
-        /* Modal de confirmação */
-        .modal-overlay {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
-            z-index: 1000;
-            justify-content: center;
-            align-items: center;
-            animation: fadeIn 0.3s;
-        }
-        
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-        
-        .modal-content {
-            background-color: white;
-            padding: 30px;
-            border-radius: 10px;
-            max-width: 400px;
-            width: 90%;
-            text-align: center;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-            transform: translateY(0);
-            animation: slideIn 0.3s;
-        }
-        
-        @keyframes slideIn {
-            from {
-                opacity: 0;
-                transform: translateY(-20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-        
-        .modal-icon {
-            font-size: 50px;
-            color: var(--success);
-            margin-bottom: 20px;
-        }
-        
-        .modal-title {
-            font-size: 24px;
-            margin-bottom: 15px;
-            color: var(--dark);
-        }
-        
-        .modal-message {
-            margin-bottom: 25px;
-            color: var(--gray);
-            line-height: 1.5;
-        }
-        
-        .modal-btn {
-            padding: 12px 24px;
-            background-color: var(--primary);
-            color: white;
-            border: none;
-            border-radius: 5px;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: background-color 0.3s;
-            text-decoration: none;
-            display: inline-block;
-        }
-        
-        .modal-btn:hover {
-            background-color: var(--primary-light);
-        }
-        
-        /* Responsividade */
-        @media (max-width: 480px) {
-            .modal-content {
-                padding: 20px;
-            }
-            
-            .modal-title {
-                font-size: 20px;
-            }
-            
-            .modal-icon {
-                font-size: 40px;
-                margin-bottom: 15px;
-            }
-            
-            .modal-btn {
-                padding: 10px 20px;
-                font-size: 14px;
-            }
-        }
-    </style>
-    <link href="https://fonts.googleapis.com/css2?family=Libre+Barcode+128&display=swap" rel="stylesheet">
-</head>
-<body>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Libre+Barcode+128&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link rel="stylesheet" href="../assets/css/payment.css" />
+  </head>
+
+  <body>
     <div class="container">
-        <header>
-            <h1>Aluguel de Roupas</h1>
-            <p>Finalize seu pagamento para confirmar o aluguel</p>
-        </header>
-        
-        <div class="checkout-container">
-            <section class="order-summary">
-                <h2>Resumo do Aluguel</h2>
-                
-                <div class="order-items">
-                    <div class="order-item">
-                        <img src="https://via.placeholder.com/80x80?text=Vestido" alt="Vestido de Festa" class="item-image">
-                        <div class="item-details">
-                            <div class="item-name">Vestido de Festa Longo</div>
-                            <div class="item-period">Período: 3 dias</div>
-                            <div class="item-price">R$ 120,00</div>
-                        </div>
-                    </div>
-                    
-                    <div class="order-item">
-                        <img src="https://via.placeholder.com/80x80?text=Blazer" alt="Blazer Social" class="item-image">
-                        <div class="item-details">
-                            <div class="item-name">Blazer Social Masculino</div>
-                            <div class="item-period">Período: 2 dias</div>
-                            <div class="item-price">R$ 80,00</div>
-                        </div>
-                    </div>
+      <header>
+        <img
+          src="../assets/images/styleshare-deitado.png"
+          alt="StyleShare Logo"
+          class="logo"
+        />
+        <p>Finalize seu pagamento para confirmar o aluguel</p>
+      </header>
+
+      <div class="checkout-container">
+        <section class="order-summary">
+          <h2>Resumo do Aluguel</h2>
+
+          <div class="order-items">
+            <div class="order-item">
+              <img
+                src="https://via.placeholder.com/80x80?text=Vestido"
+                alt="Vestido de Festa"
+                class="item-image"
+              />
+              <div class="item-details">
+                <div class="item-name">Vestido de Festa Longo</div>
+                <div class="item-period">Período: 3 dias</div>
+                <div class="item-price">R$ 120,00</div>
+              </div>
+            </div>
+
+            <div class="order-item">
+              <img
+                src="https://via.placeholder.com/80x80?text=Blazer"
+                alt="Blazer Social"
+                class="item-image"
+              />
+              <div class="item-details">
+                <div class="item-name">Blazer Social Masculino</div>
+                <div class="item-period">Período: 2 dias</div>
+                <div class="item-price">R$ 80,00</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="order-total">
+            <div class="total-row">
+              <span>Subtotal:</span>
+              <span>R$ 200,00</span>
+            </div>
+            <div class="total-row">
+              <span>Taxa de Limpeza:</span>
+              <span>R$ 30,00</span>
+            </div>
+            <div class="total-row">
+              <span>Frete:</span>
+              <span>R$ 15,00</span>
+            </div>
+            <div class="total-row">
+              <span>Total:</span>
+              <span>R$ 245,00</span>
+            </div>
+          </div>
+        </section>
+
+        <section class="payment-form-container">
+          <div class="payment-methods">
+            <h3>Método de Pagamento</h3>
+            <div class="payment-options">
+              <label class="payment-option active" id="creditCardOption">
+                <input
+                  type="radio"
+                  name="paymentMethod"
+                  value="creditCard"
+                  checked
+                />
+                <img
+                  src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/creditcard/creditcard-original.svg"
+                  class="icon"
+                />
+                <div class="text">
+                  <h4>Cartão de Crédito</h4>
+                  <p>Pague em até 12x no cartão</p>
                 </div>
-                
-                <div class="order-total">
-                    <div class="total-row">
-                        <span>Subtotal:</span>
-                        <span>R$ 200,00</span>
-                    </div>
-                    <div class="total-row">
-                        <span>Taxa de Limpeza:</span>
-                        <span>R$ 30,00</span>
-                    </div>
-                    <div class="total-row">
-                        <span>Frete:</span>
-                        <span>R$ 15,00</span>
-                    </div>
-                    <div class="total-row">
-                        <span>Total:</span>
-                        <span>R$ 245,00</span>
-                    </div>
+              </label>
+
+              <label class="payment-option" id="pixOption">
+                <input type="radio" name="paymentMethod" value="pix" />
+                <img
+                  src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/pix/pix-original.svg"
+                  class="icon"
+                />
+                <div class="text">
+                  <h4>PIX</h4>
+                  <p>Pagamento instantâneo com 5% de desconto</p>
                 </div>
-            </section>
-            
-            <section class="payment-form-container">
-                <div class="payment-methods">
-                    <h3>Método de Pagamento</h3>
-                    <div class="payment-options">
-                        <label class="payment-option active" id="creditCardOption">
-                            <input type="radio" name="paymentMethod" value="creditCard" checked>
-                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/creditcard/creditcard-original.svg" class="icon">
-                            <div class="text">
-                                <h4>Cartão de Crédito</h4>
-                                <p>Pague em até 12x no cartão</p>
-                            </div>
-                        </label>
-                        
-                        <label class="payment-option" id="pixOption">
-                            <input type="radio" name="paymentMethod" value="pix">
-                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/pix/pix-original.svg" class="icon">
-                            <div class="text">
-                                <h4>PIX</h4>
-                                <p>Pagamento instantâneo com 5% de desconto</p>
-                            </div>
-                        </label>
-                        
-                        <label class="payment-option" id="boletoOption">
-                            <input type="radio" name="paymentMethod" value="boleto">
-                            <img src="https://cdn.jsdelivr.net/npm/simple-icons@v5/icons/barcode.svg" class="icon">
-                            <div class="text">
-                                <h4>Boleto Bancário</h4>
-                                <p>Pagamento em até 3 dias úteis</p>
-                            </div>
-                        </label>
-                    </div>
+              </label>
+
+              <label class="payment-option" id="boletoOption">
+                <input type="radio" name="paymentMethod" value="boleto" />
+                <img
+                  src="https://cdn.jsdelivr.net/npm/simple-icons@v5/icons/barcode.svg"
+                  class="icon"
+                />
+                <div class="text">
+                  <h4>Boleto Bancário</h4>
+                  <p>Pagamento em até 3 dias úteis</p>
                 </div>
-                
-                <!-- Formulário de Cartão de Crédito -->
-                <form class="payment-form active" id="creditCardForm">
-                    <h2>Pagamento com Cartão</h2>
-                    
-                    <div class="form-group">
-                        <label for="cardName">Nome no Cartão</label>
-                        <input type="text" id="cardName" class="form-control" placeholder="Como escrito no cartão" required>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="cardNumber">Número do Cartão</label>
-                        <div class="card-number-container">
-                            <input type="text" id="cardNumber" class="form-control" placeholder="1234 5678 9012 3456" required maxlength="19">
-                            <div class="card-icons">
-                                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/visa/visa-original.svg" alt="Visa" class="card-icon" id="visaIcon">
-                                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mastercard/mastercard-original.svg" alt="Mastercard" class="card-icon" id="mastercardIcon">
-                                <img src="https://cdn.jsdelivr.net/npm/simple-icons@v5/icons/amex.svg" alt="Amex" class="card-icon" id="amexIcon">
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="cardExpiry">Validade</label>
-                            <input type="text" id="cardExpiry" class="form-control" placeholder="MM/AA" required maxlength="5">
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="cardCvv">CVV</label>
-                            <input type="text" id="cardCvv" class="form-control" placeholder="123" required maxlength="4">
-                        </div>
-                    </div>
-                    
-                    <button type="submit" class="btn">Confirmar Pagamento</button>
-                </form>
-                
-                <!-- Formulário de PIX -->
-                <form class="payment-form" id="pixForm">
-                    <div class="pix-instructions">
-                        <div class="icon">PIX</div>
-                        <h3>Pagamento via PIX</h3>
-                        <p>Você ganhou <strong>5% de desconto</strong> pagando com PIX!</p>
-                        <div class="pix-qrcode">
-                            <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=PIX1234567890" alt="QR Code PIX">
-                        </div>
-                        <p>Valor: <strong>R$ 232,75</strong></p>
-                        <p>Escaneie o QR Code acima ou copie o código abaixo:</p>
-                        <div class="form-control" style="text-align: center; font-weight: bold; margin-top: 10px;">
-                            PIX1234567890
-                        </div>
-                    </div>
-                    <button type="submit" class="btn btn-pix">Copiar Código PIX</button>
-                </form>
-                
-                <!-- Formulário de Boleto -->
-                <form class="payment-form" id="boletoForm">
-                    <div class="boleto-instructions">
-                        <div class="icon">Boleto</div>
-                        <h3>Pagamento via Boleto</h3>
-                        <p>O boleto será válido por 3 dias úteis</p>
-                        <div class="boleto-barcode">
-                            123456789012345678901234567890123456
-                        </div>
-                        <p>Valor: <strong>R$ 245,00</strong></p>
-                        <p>Vencimento: <strong>05/07/2023</strong></p>
-                    </div>
-                    <button type="submit" class="btn btn-boleto">Imprimir Boleto</button>
-                </form>
-            </section>
-        </div>
+              </label>
+            </div>
+          </div>
+
+          <!-- Formulário de Cartão de Crédito -->
+          <form class="payment-form active" id="creditCardForm">
+            <h2>Pagamento com Cartão</h2>
+
+            <div class="form-group">
+              <label for="cardName">Nome no Cartão</label>
+              <input
+                type="text"
+                id="cardName"
+                class="form-control"
+                placeholder="Como escrito no cartão"
+                required
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="cardNumber">Número do Cartão</label>
+              <div class="card-number-container">
+                <input
+                  type="text"
+                  id="cardNumber"
+                  class="form-control"
+                  placeholder="1234 5678 9012 3456"
+                  required
+                  maxlength="19"
+                />
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="cardExpiry">Validade</label>
+                <input
+                  type="text"
+                  id="cardExpiry"
+                  class="form-control"
+                  placeholder="MM/AA"
+                  required
+                  maxlength="5"
+                />
+              </div>
+
+              <div class="form-group">
+                <label for="cardCvv">CVV</label>
+                <input
+                  type="text"
+                  id="cardCvv"
+                  class="form-control"
+                  placeholder="123"
+                  required
+                  maxlength="4"
+                />
+              </div>
+            </div>
+
+            <button type="submit" class="btn">Confirmar Pagamento</button>
+          </form>
+
+          <!-- Formulário de PIX -->
+          <form class="payment-form" id="pixForm">
+            <div class="pix-instructions">
+              <div class="icon">PIX</div>
+              <h3>Pagamento via PIX</h3>
+              <p>
+                Você ganhou <strong>5% de desconto</strong> pagando com PIX!
+              </p>
+              <div class="pix-qrcode">
+                <img
+                  src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=PIX1234567890"
+                  alt="QR Code PIX"
+                />
+              </div>
+              <p>Valor: <strong>R$ 232,75</strong></p>
+              <p>Escaneie o QR Code acima ou copie o código abaixo:</p>
+              <div
+                class="form-control"
+                style="text-align: center; font-weight: bold; margin-top: 10px"
+              >
+                PIX1234567890
+              </div>
+            </div>
+            <button type="submit" class="btn btn-pix">Copiar Código PIX</button>
+          </form>
+
+          <!-- Formulário de Boleto -->
+          <form class="payment-form" id="boletoForm">
+            <div class="boleto-instructions">
+              <div class="icon">Boleto</div>
+              <h3>Pagamento via Boleto</h3>
+              <p>O boleto será válido por 3 dias úteis</p>
+              <div class="boleto-barcode">
+                123456789012345678901234567890123456
+              </div>
+              <p>Valor: <strong>R$ 245,00</strong></p>
+              <p>Vencimento: <strong>05/07/2023</strong></p>
+            </div>
+            <button type="submit" class="btn btn-boleto">
+              Imprimir Boleto
+            </button>
+          </form>
+        </section>
+      </div>
     </div>
-    
+
     <!-- Modal de Confirmação -->
     <div class="modal-overlay" id="confirmationModal">
-        <div class="modal-content">
-            <div class="modal-icon">✓</div>
-            <h2 class="modal-title">Pedido confirmado com sucesso!</h2>
-            <p class="modal-message">Obrigado por alugar conosco. Você receberá um e-mail com os detalhes da entrega.</p>
-            <a href="index.html" class="modal-btn">Voltar para a página inicial</a>
-        </div>
+      <div class="modal-content">
+        <div class="modal-icon">✓</div>
+        <h2 class="modal-title">Pedido confirmado com sucesso!</h2>
+        <p class="modal-message">
+          Obrigado por alugar conosco. Você receberá um e-mail com os detalhes
+          da entrega.
+        </p>
+        <a href="index.html" class="modal-btn">Voltar para a página inicial</a>
+      </div>
     </div>
-    
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Seleção do método de pagamento
-            const paymentOptions = document.querySelectorAll('.payment-option');
-            const paymentForms = {
-                creditCard: document.getElementById('creditCardForm'),
-                pix: document.getElementById('pixForm'),
-                boleto: document.getElementById('boletoForm')
-            };
-            
-            paymentOptions.forEach(option => {
-                option.addEventListener('click', function() {
-                    // Remove a classe active de todas as opções
-                    paymentOptions.forEach(opt => opt.classList.remove('active'));
-                    // Adiciona a classe active apenas na opção clicada
-                    this.classList.add('active');
-                    
-                    // Oculta todos os formulários
-                    Object.values(paymentForms).forEach(form => form.classList.remove('active'));
-                    
-                    // Mostra apenas o formulário correspondente
-                    const method = this.querySelector('input').value;
-                    paymentForms[method].classList.add('active');
-                });
-            });
-            
-            // Formatação do número do cartão
-            const cardNumber = document.getElementById('cardNumber');
-            cardNumber.addEventListener('input', function(e) {
-                let value = e.target.value.replace(/\s+/g, '').replace(/[^0-9]/gi, '');
-                let formatted = value.replace(/(\d{4})/g, '$1 ').trim();
-                e.target.value = formatted;
-                
-                // Detectar tipo de cartão e destacar ícone
-                const visaIcon = document.getElementById('visaIcon');
-                const mastercardIcon = document.getElementById('mastercardIcon');
-                const amexIcon = document.getElementById('amexIcon');
-                
-                // Reset all icons
-                [visaIcon, mastercardIcon, amexIcon].forEach(icon => {
-                    icon.classList.remove('active');
-                });
-                
-                if (/^4/.test(value)) {
-                    visaIcon.classList.add('active');
-                } else if (/^5[1-5]/.test(value)) {
-                    mastercardIcon.classList.add('active');
-                } else if (/^3[47]/.test(value)) {
-                    amexIcon.classList.add('active');
-                }
-            });
-            
-            // Formatação da data de validade
-            const cardExpiry = document.getElementById('cardExpiry');
-            cardExpiry.addEventListener('input', function(e) {
-                let value = e.target.value.replace(/[^0-9]/g, '');
-                if (value.length > 2) {
-                    value = value.substring(0, 2) + '/' + value.substring(2, 4);
-                }
-                e.target.value = value;
-            });
-            
-            // Validação dos formulários e abertura do modal
-            const paymentFormsElements = document.querySelectorAll('.payment-form');
-            const confirmationModal = document.getElementById('confirmationModal');
-            
-            paymentFormsElements.forEach(form => {
-                form.addEventListener('submit', function(e) {
-                    e.preventDefault();
-                    
-                    // Validações para cartão de crédito
-                    if (form.id === 'creditCardForm') {
-                        const cardName = document.getElementById('cardName').value.trim();
-                        const cardNumber = document.getElementById('cardNumber').value.replace(/\s+/g, '');
-                        const cardExpiry = document.getElementById('cardExpiry').value;
-                        const cardCvv = document.getElementById('cardCvv').value.trim();
-                        
-                        if (!cardName || cardNumber.length < 16 || !cardExpiry || !cardCvv) {
-                            alert('Por favor, preencha todos os campos do cartão corretamente.');
-                            return;
-                        }
-                    }
-                    
-                    // Mostrar modal de confirmação
-                    confirmationModal.style.display = 'flex';
-                });
-            });
-            
-            // Fechar modal ao clicar fora do conteúdo
-            confirmationModal.addEventListener('click', function(e) {
-                if (e.target === confirmationModal) {
-                    confirmationModal.style.display = 'none';
-                }
-            });
-            
-            // Fechar modal ao pressionar ESC
-            document.addEventListener('keydown', function(e) {
-                if (e.key === 'Escape' && confirmationModal.style.display === 'flex') {
-                    confirmationModal.style.display = 'none';
-                }
-            });
-        });
-    </script>
-</body>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="footer-container">
+        <div class="footer-section">
+          <img
+            src="../assets/images/styleshare-deitado.png"
+            alt="StyleShare Logo"
+            class="logo"
+            style="width: 160px; height: auto; margin-bottom: 10px"
+          />
+          <p class="footer-text">
+            Aluguel de roupas e acessórios para todas as ocasiões.
+          </p>
+          <div class="social-links">
+            <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+            <a href="#" class="social-link"
+              ><i class="fab fa-facebook-f"></i
+            ></a>
+            <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+            <a href="#" class="social-link"
+              ><i class="fab fa-pinterest-p"></i
+            ></a>
+          </div>
+        </div>
+
+        <div class="footer-section">
+          <h3 class="footer-title">Links Úteis</h3>
+          <ul class="footer-links">
+            <li><a href="#" class="footer-link">Sobre nós</a></li>
+            <li><a href="#" class="footer-link">Como funciona</a></li>
+            <li><a href="#" class="footer-link">Termos de uso</a></li>
+            <li><a href="#" class="footer-link">Política de privacidade</a></li>
+            <li><a href="#" class="footer-link">Trabalhe conosco</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-section">
+          <h3 class="footer-title">Ajuda</h3>
+          <ul class="footer-links">
+            <li><a href="#" class="footer-link">Central de ajuda</a></li>
+            <li><a href="#" class="footer-link">Perguntas frequentes</a></li>
+            <li><a href="#" class="footer-link">Trocas e devoluções</a></li>
+            <li><a href="#" class="footer-link">Contato</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-section">
+          <h3 class="footer-title">Newsletter</h3>
+          <p class="footer-text">Assine para receber ofertas exclusivas.</p>
+          <form class="newsletter-form">
+            <input
+              type="email"
+              placeholder="Seu e-mail"
+              class="newsletter-input"
+            />
+            <button type="submit" class="newsletter-btn">Assinar</button>
+          </form>
+          <div class="payment-methods">
+            <i class="fab fa-cc-visa"></i>
+            <i class="fab fa-cc-mastercard"></i>
+            <i class="fab fa-cc-paypal"></i>
+            <i class="fab fa-cc-amazon-pay"></i>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p class="copyright">
+          &copy; 2025 StyleShare. Todos os direitos reservados.
+        </p>
+      </div>
+    </footer>
+
+    <script src="../assets/js/payment.js"></script>
+  </body>
 </html>

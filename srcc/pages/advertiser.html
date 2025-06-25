@@ -1,635 +1,173 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Perfil do Anunciante - Aluguel de Roupas</title>
-    <style>
-        :root {
-            --primary: #6a5acd;
-            --primary-light: #9370db;
-            --secondary: #ff69b4;
-            --success: #28a745;
-            --warning: #ffc107;
-            --danger: #dc3545;
-            --dark: #333;
-            --light: #f8f9fa;
-            --gray: #6c757d;
-            --border: #e0e0e0;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-
-        body {
-            background-color: #f5f5f5;
-            color: var(--dark);
-            line-height: 1.6;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-
-        header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 30px;
-        }
-
-        .header-title h1 {
-            color: var(--primary);
-            margin-bottom: 5px;
-        }
-
-        .header-title p {
-            color: var(--gray);
-        }
-
-        .settings-btn {
-            background-color: var(--primary);
-            color: white;
-            border: none;
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-
-        .settings-btn:hover {
-            background-color: var(--primary-light);
-        }
-
-        .profile-section {
-            background: white;
-            border-radius: 10px;
-            padding: 30px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            margin-bottom: 30px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
-        }
-
-        @media (min-width: 768px) {
-            .profile-section {
-                flex-direction: row;
-                text-align: left;
-                align-items: flex-start;
-            }
-        }
-
-        .profile-picture {
-            width: 120px;
-            height: 120px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 3px solid var(--primary);
-            margin-bottom: 20px;
-        }
-
-        @media (min-width: 768px) {
-            .profile-picture {
-                margin-right: 30px;
-                margin-bottom: 0;
-            }
-        }
-
-        .profile-info {
-            flex: 1;
-        }
-
-        .profile-name {
-            font-size: 24px;
-            font-weight: 600;
-            margin-bottom: 5px;
-        }
-
-        .profile-email, .profile-location {
-            color: var(--gray);
-            margin-bottom: 10px;
-            display: flex;
-            align-items: center;
-        }
-
-        .profile-email i, .profile-location i {
-            margin-right: 8px;
-        }
-
-        .edit-profile-btn {
-            padding: 8px 20px;
-            background-color: var(--primary);
-            color: white;
-            border: none;
-            border-radius: 5px;
-            font-size: 14px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-            margin-top: 15px;
-            display: inline-flex;
-            align-items: center;
-        }
-
-        .edit-profile-btn i {
-            margin-right: 8px;
-        }
-
-        .edit-profile-btn:hover {
-            background-color: var(--primary-light);
-        }
-
-        .clothes-section {
-            background: white;
-            border-radius: 10px;
-            padding: 30px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-        }
-
-        .section-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-
-        .section-title {
-            font-size: 20px;
-            color: var(--primary);
-        }
-
-        .add-clothes-btn {
-            padding: 8px 16px;
-            background-color: var(--success);
-            color: white;
-            border: none;
-            border-radius: 5px;
-            font-size: 14px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-            display: inline-flex;
-            align-items: center;
-        }
-
-        .add-clothes-btn i {
-            margin-right: 8px;
-        }
-
-        .add-clothes-btn:hover {
-            background-color: #218838;
-        }
-
-        .clothes-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 20px;
-        }
-
-        @media (min-width: 576px) {
-            .clothes-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-        }
-
-        @media (min-width: 992px) {
-            .clothes-grid {
-                grid-template-columns: repeat(3, 1fr);
-            }
-        }
-
-        .clothes-card {
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            overflow: hidden;
-            transition: transform 0.3s, box-shadow 0.3s;
-        }
-
-        .clothes-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-        }
-
-        .clothes-image {
-            width: 100%;
-            height: 200px;
-            object-fit: cover;
-        }
-
-        .clothes-details {
-            padding: 15px;
-        }
-
-        .clothes-title {
-            font-size: 18px;
-            font-weight: 600;
-            margin-bottom: 5px;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-
-        .clothes-price {
-            color: var(--primary);
-            font-weight: 600;
-            margin-bottom: 10px;
-        }
-
-        .clothes-status {
-            display: inline-block;
-            padding: 4px 8px;
-            border-radius: 4px;
-            font-size: 12px;
-            font-weight: 500;
-            margin-bottom: 15px;
-        }
-
-        .status-available {
-            background-color: rgba(40, 167, 69, 0.1);
-            color: var(--success);
-        }
-
-        .status-rented {
-            background-color: rgba(220, 53, 69, 0.1);
-            color: var(--danger);
-        }
-
-        .status-pending {
-            background-color: rgba(255, 193, 7, 0.1);
-            color: var(--warning);
-        }
-
-        .clothes-actions {
-            display: flex;
-            gap: 10px;
-        }
-
-        .action-btn {
-            flex: 1;
-            padding: 8px;
-            border: none;
-            border-radius: 4px;
-            font-size: 12px;
-            font-weight: 500;
-            cursor: pointer;
-            transition: opacity 0.3s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .action-btn i {
-            margin-right: 5px;
-        }
-
-        .action-btn:hover {
-            opacity: 0.8;
-        }
-
-        .edit-btn {
-            background-color: var(--primary);
-            color: white;
-        }
-
-        .remove-btn {
-            background-color: var(--danger);
-            color: white;
-        }
-
-        .details-btn {
-            background-color: var(--success);
-            color: white;
-        }
-
-        /* Modal de configurações */
-        .modal-overlay {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
-            z-index: 1000;
-            justify-content: center;
-            align-items: center;
-            animation: fadeIn 0.3s;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
-        .modal-content {
-            background-color: white;
-            padding: 30px;
-            border-radius: 10px;
-            max-width: 500px;
-            width: 90%;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-            transform: translateY(0);
-            animation: slideIn 0.3s;
-        }
-
-        @keyframes slideIn {
-            from {
-                opacity: 0;
-                transform: translateY(-20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .modal-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-
-        .modal-title {
-            font-size: 20px;
-            color: var(--primary);
-        }
-
-        .close-modal {
-            background: none;
-            border: none;
-            font-size: 24px;
-            cursor: pointer;
-            color: var(--gray);
-        }
-
-        .settings-menu {
-            list-style: none;
-        }
-
-        .settings-item {
-            padding: 12px 0;
-            border-bottom: 1px solid var(--border);
-        }
-
-        .settings-item:last-child {
-            border-bottom: none;
-        }
-
-        .settings-link {
-            display: flex;
-            align-items: center;
-            color: var(--dark);
-            text-decoration: none;
-            transition: color 0.3s;
-        }
-
-        .settings-link i {
-            margin-right: 10px;
-            color: var(--primary);
-            width: 20px;
-            text-align: center;
-        }
-
-        .settings-link:hover {
-            color: var(--primary);
-        }
-    </style>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-</head>
-<body>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+    <link rel="stylesheet" href="../assets/css/advertiser.css">
+  </head>
+  
+  <body>
     <div class="container">
-        <header>
-            <div class="header-title">
-                <h1>Meu Perfil de Anunciante</h1>
-                <p>Gerencie seus anúncios e perfil</p>
-            </div>
-            <button class="settings-btn" id="settingsBtn">
-                <i class="fas fa-cog"></i>
-            </button>
-        </header>
-        
-        <section class="profile-section">
-            <img src="https://via.placeholder.com/120x120?text=Anunciante" alt="Foto do perfil" class="profile-picture">
-            <div class="profile-info">
-                <h2 class="profile-name">Ana Carolina Oliveira</h2>
-                <p class="profile-email">
-                    <i class="fas fa-envelope"></i> ana.oliveira@exemplo.com
-                </p>
-                <p class="profile-location">
-                    <i class="fas fa-map-marker-alt"></i> São Paulo, SP
-                </p>
-                <button class="edit-profile-btn" id="editProfileBtn">
-                    <i class="fas fa-edit"></i> Editar Perfil
-                </button>
-            </div>
-        </section>
-        
-        <section class="clothes-section">
-            <div class="section-header">
-                <h2 class="section-title">Minhas Roupas Anunciadas</h2>
-                <a href="novo-anuncio.html" class="add-clothes-btn">
-                    <i class="fas fa-plus"></i> Novo Anúncio
-                </a>
-            </div>
-            
-            <div class="clothes-grid" id="clothesGrid">
-                <!-- Itens serão carregados dinamicamente via JavaScript -->
-            </div>
-        </section>
+      <header>
+        <div class="header-title">
+          <h1>Meu Perfil de Anunciante</h1>
+          <p>Gerencie seus anúncios e perfil</p>
+        </div>
+        <button class="settings-btn" id="settingsBtn">
+          <i class="fas fa-cog"></i>
+        </button>
+      </header>
+
+      <section class="profile-section">
+        <img
+          src="https://via.placeholder.com/120x120?text=Anunciante"
+          alt="Foto do perfil"
+          class="profile-picture"
+        />
+        <div class="profile-info">
+          <h2 class="profile-name">Ana Carolina Oliveira</h2>
+          <p class="profile-email">
+            <i class="fas fa-envelope"></i> ana.oliveira@exemplo.com
+          </p>
+          <p class="profile-location">
+            <i class="fas fa-map-marker-alt"></i> São Paulo, SP
+          </p>
+          <button class="edit-profile-btn" id="editProfileBtn">
+            <i class="fas fa-edit"></i> Editar Perfil
+          </button>
+        </div>
+      </section>
+
+      <section class="clothes-section">
+        <div class="section-header">
+          <h2 class="section-title">Minhas Roupas Anunciadas</h2>
+          <a href="novo-anuncio.html" class="add-clothes-btn">
+            <i class="fas fa-plus"></i> Novo Anúncio
+          </a>
+        </div>
+
+        <div class="clothes-grid" id="clothesGrid">
+          <!-- Itens serão carregados dinamicamente via JavaScript -->
+        </div>
+      </section>
     </div>
-    
+
     <!-- Modal de Configurações -->
     <div class="modal-overlay" id="settingsModal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3 class="modal-title">Configurações</h3>
-                <button class="close-modal" id="closeSettingsModal">&times;</button>
-            </div>
-            
-            <ul class="settings-menu">
-                <li class="settings-item">
-                    <a href="#" class="settings-link">
-                        <i class="fas fa-user-cog"></i> Configurações da Conta
-                    </a>
-                </li>
-                <li class="settings-item">
-                    <a href="#" class="settings-link">
-                        <i class="fas fa-bell"></i> Notificações
-                    </a>
-                </li>
-                <li class="settings-item">
-                    <a href="#" class="settings-link">
-                        <i class="fas fa-lock"></i> Privacidade e Segurança
-                    </a>
-                </li>
-                <li class="settings-item">
-                    <a href="#" class="settings-link">
-                        <i class="fas fa-credit-card"></i> Pagamentos
-                    </a>
-                </li>
-                <li class="settings-item">
-                    <a href="#" class="settings-link">
-                        <i class="fas fa-question-circle"></i> Ajuda e Suporte
-                    </a>
-                </li>
-                <li class="settings-item">
-                    <a href="login.html" class="settings-link">
-                        <i class="fas fa-sign-out-alt"></i> Sair
-                    </a>
-                </li>
-            </ul>
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3 class="modal-title">Configurações</h3>
+          <button class="close-modal" id="closeSettingsModal">&times;</button>
         </div>
+
+        <ul class="settings-menu">
+          <li class="settings-item">
+            <a href="#" class="settings-link">
+              <i class="fas fa-user-cog"></i> Configurações da Conta
+            </a>
+          </li>
+          <li class="settings-item">
+            <a href="#" class="settings-link">
+              <i class="fas fa-bell"></i> Notificações
+            </a>
+          </li>
+          <li class="settings-item">
+            <a href="#" class="settings-link">
+              <i class="fas fa-lock"></i> Privacidade e Segurança
+            </a>
+          </li>
+          <li class="settings-item">
+            <a href="#" class="settings-link">
+              <i class="fas fa-credit-card"></i> Pagamentos
+            </a>
+          </li>
+          <li class="settings-item">
+            <a href="#" class="settings-link">
+              <i class="fas fa-question-circle"></i> Ajuda e Suporte
+            </a>
+          </li>
+          <li class="settings-item">
+            <a href="login.html" class="settings-link">
+              <i class="fas fa-sign-out-alt"></i> Sair
+            </a>
+          </li>
+        </ul>
+      </div>
     </div>
-    
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Dados simulados das roupas anunciadas
-            const clothesData = [
-                {
-                    id: 1,
-                    image: "https://via.placeholder.com/300x300?text=Vestido+de+Festa",
-                    title: "Vestido Longo de Festa Vermelho",
-                    price: "R$ 120/dia",
-                    status: "available"
-                },
-                {
-                    id: 2,
-                    image: "https://via.placeholder.com/300x300?text=Blazer+Social",
-                    title: "Blazer Social Masculino Preto",
-                    price: "R$ 80/dia",
-                    status: "rented"
-                },
-                {
-                    id: 3,
-                    image: "https://via.placeholder.com/300x300?text=Saia+Longa",
-                    title: "Saia Longa Floral com Fenda",
-                    price: "R$ 60/dia",
-                    status: "available"
-                },
-                {
-                    id: 4,
-                    image: "https://via.placeholder.com/300x300?text=Conjunto+Casual",
-                    title: "Conjunto Casual Feminino",
-                    price: "R$ 90/dia",
-                    status: "pending"
-                },
-                {
-                    id: 5,
-                    image: "https://via.placeholder.com/300x300?text=Paletó+Elegante",
-                    title: "Paletó Elegante Cinza",
-                    price: "R$ 100/dia",
-                    status: "available"
-                },
-                {
-                    id: 6,
-                    image: "https://via.placeholder.com/300x300?text=Vestido+Curto",
-                    title: "Vestido Curto para Festas",
-                    price: "R$ 70/dia",
-                    status: "rented"
-                }
-            ];
 
-            // Elementos do DOM
-            const clothesGrid = document.getElementById('clothesGrid');
-            const editProfileBtn = document.getElementById('editProfileBtn');
-            const settingsBtn = document.getElementById('settingsBtn');
-            const settingsModal = document.getElementById('settingsModal');
-            const closeSettingsModal = document.getElementById('closeSettingsModal');
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="footer-container">
+        <div class="footer-section">
+          <h3 class="footer-title">StyleShare</h3>
+          <p class="footer-text">
+            Aluguel de roupas e acessórios para todas as ocasiões.
+          </p>
+          <div class="social-links">
+            <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+            <a href="#" class="social-link"
+              ><i class="fab fa-facebook-f"></i
+            ></a>
+            <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+            <a href="#" class="social-link"
+              ><i class="fab fa-pinterest-p"></i
+            ></a>
+          </div>
+        </div>
 
-            // Carregar roupas na grade
-            function loadClothes() {
-                clothesGrid.innerHTML = '';
-                
-                clothesData.forEach(item => {
-                    const statusClass = 
-                        item.status === 'available' ? 'status-available' :
-                        item.status === 'rented' ? 'status-rented' :
-                        'status-pending';
-                    
-                    const statusText = 
-                        item.status === 'available' ? 'Disponível' :
-                        item.status === 'rented' ? 'Alugada' :
-                        'Pendente';
-                    
-                    const card = document.createElement('div');
-                    card.className = 'clothes-card';
-                    card.innerHTML = `
-                        <img src="${item.image}" alt="${item.title}" class="clothes-image">
-                        <div class="clothes-details">
-                            <h3 class="clothes-title">${item.title}</h3>
-                            <p class="clothes-price">${item.price}</p>
-                            <span class="clothes-status ${statusClass}">${statusText}</span>
-                            <div class="clothes-actions">
-                                <button class="action-btn edit-btn" onclick="editClothes(${item.id})">
-                                    <i class="fas fa-edit"></i> Editar
-                                </button>
-                                <button class="action-btn remove-btn" onclick="removeClothes(${item.id})">
-                                    <i class="fas fa-trash"></i> Remover
-                                </button>
-                                <a href="roupa.html?id=${item.id}" class="action-btn details-btn">
-                                    <i class="fas fa-eye"></i> Detalhes
-                                </a>
-                            </div>
-                        </div>
-                    `;
-                    clothesGrid.appendChild(card);
-                });
-            }
+        <div class="footer-section">
+          <h3 class="footer-title">Links Úteis</h3>
+          <ul class="footer-links">
+            <li><a href="#" class="footer-link">Sobre nós</a></li>
+            <li><a href="#" class="footer-link">Como funciona</a></li>
+            <li><a href="#" class="footer-link">Termos de uso</a></li>
+            <li><a href="#" class="footer-link">Política de privacidade</a></li>
+            <li><a href="#" class="footer-link">Trabalhe conosco</a></li>
+          </ul>
+        </div>
 
-            // Funções globais para os botões
-            window.editClothes = function(id) {
-                alert(`Editar roupa com ID: ${id}`);
-            };
+        <div class="footer-section">
+          <h3 class="footer-title">Ajuda</h3>
+          <ul class="footer-links">
+            <li><a href="#" class="footer-link">Central de ajuda</a></li>
+            <li><a href="#" class="footer-link">Perguntas frequentes</a></li>
+            <li><a href="#" class="footer-link">Trocas e devoluções</a></li>
+            <li><a href="#" class="footer-link">Contato</a></li>
+          </ul>
+        </div>
 
-            window.removeClothes = function(id) {
-                if (confirm('Tem certeza que deseja remover este anúncio?')) {
-                    alert(`Roupa com ID: ${id} removida com sucesso!`);
-                    // Aqui você faria uma chamada AJAX para remover do backend
-                }
-            };
+        <div class="footer-section">
+          <h3 class="footer-title">Newsletter</h3>
+          <p class="footer-text">Assine para receber ofertas exclusivas.</p>
+          <form class="newsletter-form">
+            <input
+              type="email"
+              placeholder="Seu e-mail"
+              class="newsletter-input"
+            />
+            <button type="submit" class="newsletter-btn">Assinar</button>
+          </form>
+          <div class="payment-methods">
+            <i class="fab fa-cc-visa"></i>
+            <i class="fab fa-cc-mastercard"></i>
+            <i class="fab fa-cc-paypal"></i>
+            <i class="fab fa-cc-amazon-pay"></i>
+          </div>
+        </div>
+      </div>
 
-            // Editar perfil
-            editProfileBtn.addEventListener('click', function() {
-                alert('Abrir tela de edição de perfil');
-            });
+      <div class="footer-bottom">
+        <p class="copyright">
+          &copy; 2025 StyleShare. Todos os direitos reservados.
+        </p>
+      </div>
+    </footer>
 
-            // Configurações
-            settingsBtn.addEventListener('click', function() {
-                settingsModal.style.display = 'flex';
-            });
-
-            closeSettingsModal.addEventListener('click', function() {
-                settingsModal.style.display = 'none';
-            });
-
-            // Fechar modal ao clicar fora
-            window.addEventListener('click', function(event) {
-                if (event.target === settingsModal) {
-                    settingsModal.style.display = 'none';
-                }
-            });
-
-            // Fechar modal ao pressionar ESC
-            document.addEventListener('keydown', function(event) {
-                if (event.key === 'Escape' && settingsModal.style.display === 'flex') {
-                    settingsModal.style.display = 'none';
-                }
-            });
-
-            // Carregar os dados iniciais
-            loadClothes();
-        });
-    </script>
-</body>
+    <script src="../assets/js/advertiser.js"></script>
+  </body>
 </html>

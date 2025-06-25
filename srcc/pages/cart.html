@@ -6,9 +6,9 @@
     <title>Carrinho de Compras | StyleShare</title>
     <style>
         :root {
-            --primary: #FF6B8B;
-            --primary-light: #ff8fa3;
-            --secondary: #6B5B95;
+            --primary: #A12AEB;
+            --primary-light: rgb(184, 152, 248);
+            --secondary: #2A31EB;
             --light: #f8f9fa;
             --dark: #212529;
             --gray: #6c757d;
@@ -227,7 +227,7 @@
         .checkout-btn:hover {
             background-color: var(--primary-light);
             transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(255,107,139,0.3);
+            box-shadow: 0 5px 15px rgba(42, 49, 235, 0.3);
         }
 
         .continue-btn {
@@ -247,7 +247,7 @@
         }
 
         .continue-btn:hover {
-            background-color: rgba(255,107,139,0.1);
+            background-color: rgba(42, 49, 235, 0.1);
         }
 
         /* Empty Cart */
@@ -502,15 +502,15 @@
             
             // Button events
             backBtn.addEventListener('click', function() {
-                window.location.href = 'index.html';
+                window.location.href = './home.html';
             });
             
             continueBtn.addEventListener('click', function() {
-                window.location.href = 'index.html';
+                window.location.href = './home.html';
             });
             
             checkoutBtn.addEventListener('click', function() {
-                window.location.href = 'pagamento.html';
+                window.location.href = './payment.html';
             });
             
             // Initialize
