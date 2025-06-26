@@ -1,554 +1,200 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Perfil do Anunciante | StyleShare</title>
-    <style>
-        :root {
-            --primary: #A12AEB;
-            --primary-light: rgb(184, 152, 248);
-            --secondary: #2A31EB;
-            --success: #4CAF50;
-            --warning: #FFC107;
-            --danger: #F44336;
-            --light: #f8f9fa;
-            --dark: #212529;
-            --gray: #6c757d;
-            --light-gray: #e9ecef;
-            --white: #ffffff;
-            --border-radius: 8px;
-            --shadow: 0 4px 12px rgba(0,0,0,0.1);
-            --transition: all 0.3s ease;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', system-ui, sans-serif;
-        }
-
-        body {
-            background-color: var(--light);
-            color: var(--dark);
-            line-height: 1.6;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-
-        /* Header */
-        .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 15px 0;
-            margin-bottom: 20px;
-        }
-
-        .logo {
-            font-size: 1.8rem;
-            font-weight: 700;
-            color: var(--primary);
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .nav-actions {
-            display: flex;
-            gap: 15px;
-        }
-
-        .nav-btn {
-            background: none;
-            border: none;
-            font-size: 1.2rem;
-            color: var(--dark);
-            cursor: pointer;
-            position: relative;
-        }
-
-        .badge {
-            position: absolute;
-            top: -5px;
-            right: -5px;
-            background-color: var(--primary);
-            color: var(--white);
-            border-radius: 50%;
-            width: 18px;
-            height: 18px;
-            font-size: 0.7rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        /* Profile Section */
-        .profile-section {
-            background-color: var(--white);
-            border-radius: var(--border-radius);
-            padding: 30px;
-            box-shadow: var(--shadow);
-            margin-bottom: 30px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
-        }
-
-        .profile-pic {
-            width: 120px;
-            height: 120px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 4px solid var(--white);
-            box-shadow: var(--shadow);
-            margin-bottom: 20px;
-        }
-
-        .profile-name {
-            font-size: 1.8rem;
-            margin-bottom: 5px;
-        }
-
-        .profile-email {
-            color: var(--gray);
-            margin-bottom: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 5px;
-        }
-
-        .profile-location {
-            color: var(--gray);
-            margin-bottom: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 5px;
-        }
-
-        .rating {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 5px;
-            margin-bottom: 15px;
-        }
-
-        .star {
-            color: #FFC107;
-        }
-
-        .rating-count {
-            color: var(--gray);
-            font-size: 0.9rem;
-        }
-
-        .contact-btn {
-            background-color: var(--primary);
-            color: var(--white);
-            border: none;
-            padding: 10px 20px;
-            border-radius: var(--border-radius);
-            font-weight: 500;
-            cursor: pointer;
-            transition: var(--transition);
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .contact-btn:hover {
-            background-color: var(--primary-light);
-            transform: translateY(-2px);
-            box-shadow: var(--shadow);
-        }
-
-        /* Clothes Section */
-        .clothes-section {
-            margin-bottom: 40px;
-        }
-
-        .section-title {
-            font-size: 1.5rem;
-            margin-bottom: 20px;
-            position: relative;
-            padding-bottom: 10px;
-        }
-
-        .section-title::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 60px;
-            height: 3px;
-            background-color: var(--primary);
-        }
-
-        .clothes-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 25px;
-        }
-
-        .clothing-card {
-            background-color: var(--white);
-            border-radius: var(--border-radius);
-            overflow: hidden;
-            box-shadow: var(--shadow);
-            transition: var(--transition);
-        }
-
-        .clothing-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-        }
-
-        .clothing-image {
-            width: 100%;
-            height: 200px;
-            object-fit: cover;
-        }
-
-        .clothing-info {
-            padding: 15px;
-        }
-
-        .clothing-title {
-            font-size: 1.1rem;
-            font-weight: 600;
-            margin-bottom: 5px;
-            color: var(--dark);
-        }
-
-        .clothing-price {
-            font-size: 1.2rem;
-            font-weight: 700;
-            color: var(--primary);
-            margin-bottom: 10px;
-        }
-
-        .clothing-status {
-            display: inline-block;
-            padding: 4px 8px;
-            border-radius: 4px;
-            font-size: 0.8rem;
-            font-weight: 500;
-            margin-bottom: 15px;
-        }
-
-        .status-available {
-            background-color: rgba(76, 175, 80, 0.1);
-            color: var(--success);
-        }
-
-        .status-rented {
-            background-color: rgba(255, 193, 7, 0.1);
-            color: var(--warning);
-        }
-
-        .status-pending {
-            background-color: rgba(244, 67, 54, 0.1);
-            color: var(--danger);
-        }
-
-        .action-buttons {
-            display: flex;
-            gap: 8px;
-        }
-
-        .action-btn {
-            flex: 1;
-            padding: 8px;
-            border-radius: var(--border-radius);
-            font-size: 0.9rem;
-            font-weight: 500;
-            cursor: pointer;
-            transition: var(--transition);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 5px;
-        }
-
-        .cart-btn {
-            background-color: rgba(161, 42, 235, 0.1);
-            color: var(--primary);
-            border: none;
-        }
-
-        .cart-btn:hover {
-            background-color: rgba(161, 42, 235, 0.2);
-        }
-
-        .rent-btn {
-            background-color: var(--primary);
-            color: var(--white);
-            border: none;
-        }
-
-        .rent-btn:hover {
-            background-color: var(--primary-light);
-        }
-
-        /* Loading State */
-        .loading {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 40px;
-        }
-
-        .spinner {
-            width: 40px;
-            height: 40px;
-            border: 4px solid rgba(161, 42, 235, 0.1);
-            border-top-color: var(--primary);
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-        }
-
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
-
-        /* Responsividade */
-        @media (max-width: 992px) {
-            .clothes-grid {
-                grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-            }
-        }
-
-        @media (max-width: 768px) {
-            .profile-section {
-                padding: 20px;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .header {
-                flex-direction: column;
-                gap: 15px;
-            }
-            
-            .profile-pic {
-                width: 100px;
-                height: 100px;
-            }
-            
-            .profile-name {
-                font-size: 1.5rem;
-            }
-            
-            .clothes-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .action-buttons {
-                flex-direction: column;
-            }
-        }
-    </style>
-</head>
-<body>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link rel="stylesheet" href="../assets/css/advertiser_public.css" />
+  </head>
+  
+  <body>
     <div class="container">
-        <!-- Header -->
-        <header class="header">
-            <div class="logo">
-                <img
-            </div>
-            <div class="nav-actions">
-                <button class="nav-btn">
-                    <i class="fas fa-search"></i>
-                </button>
-                <button class="nav-btn">
-                    <i class="far fa-heart"></i>
-                </button>
-                <button class="nav-btn">
-                    <i class="fas fa-shopping-bag"></i>
-                    <span class="badge">3</span>
-                </button>
-            </div>
-        </header>
+      <!-- Header -->
+      <header class="header">
+        <div class="logo"><img</div>
+        <div class="nav-actions">
+          <button class="nav-btn">
+            <i class="fas fa-search"></i>
+          </button>
+          <button class="nav-btn">
+            <i class="far fa-heart"></i>
+          </button>
+          <button class="nav-btn">
+            <i class="fas fa-shopping-bag"></i>
+            <span class="badge">3</span>
+          </button>
+        </div>
+      </header>
 
-        <!-- Profile Section -->
-        <section class="profile-section">
-            <img src="https://randomuser.me/api/portraits/women/65.jpg" alt="Foto de perfil" class="profile-pic">
-            <h1 class="profile-name">Maria Silva</h1>
-            <p class="profile-email">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M4 4H20C21.1 4 22 4.9 22 6V18C22 19.1 21.1 20 20 20H4C2.9 20 2 19.1 2 18V6C2 4.9 2.9 4 4 4Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                    <path d="M22 6L12 13L2 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-                maria.silva@example.com
-            </p>
-            <p class="profile-location">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M21 10C21 17 12 23 12 23C12 23 3 17 3 10C3 7.61305 3.94821 5.32387 5.63604 3.63604C7.32387 1.94821 9.61305 1 12 1C14.3869 1 16.6761 1.94821 18.364 3.63604C20.0518 5.32387 21 7.61305 21 10Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                    <path d="M12 13C13.6569 13 15 11.6569 15 10C15 8.34315 13.6569 7 12 7C10.3431 7 9 8.34315 9 10C9 11.6569 10.3431 13 12 13Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-                São Paulo, SP
-            </p>
-            <div class="rating">
-                <span class="star">★★★★★</span>
-                <span class="rating-count">(24 avaliações)</span>
-            </div>
-            <button class="contact-btn" id="contactBtn">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M21 15C21 15.5304 20.7893 16.0391 20.4142 16.4142C20.0391 16.7893 19.5304 17 19 17H7L3 21V5C3 4.46957 3.21071 3.96086 3.58579 3.58579C3.96086 3.21071 4.46957 3 5 3H19C19.5304 3 20.0391 3.21071 20.4142 3.58579C20.7893 3.96086 21 4.46957 21 5V15Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-                Entrar em Contato
-            </button>
-        </section>
+      <!-- Profile Section -->
+      <section class="profile-section">
+        <img
+          src="https://randomuser.me/api/portraits/women/65.jpg"
+          alt="Foto de perfil"
+          class="profile-pic"
+        />
+        <h1 class="profile-name">Maria Silva</h1>
+        <p class="profile-email">
+          <svg
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M4 4H20C21.1 4 22 4.9 22 6V18C22 19.1 21.1 20 20 20H4C2.9 20 2 19.1 2 18V6C2 4.9 2.9 4 4 4Z"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+            <path
+              d="M22 6L12 13L2 6"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </svg>
+          maria.silva@example.com
+        </p>
+        <p class="profile-location">
+          <svg
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M21 10C21 17 12 23 12 23C12 23 3 17 3 10C3 7.61305 3.94821 5.32387 5.63604 3.63604C7.32387 1.94821 9.61305 1 12 1C14.3869 1 16.6761 1.94821 18.364 3.63604C20.0518 5.32387 21 7.61305 21 10Z"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+            <path
+              d="M12 13C13.6569 13 15 11.6569 15 10C15 8.34315 13.6569 7 12 7C10.3431 7 9 8.34315 9 10C9 11.6569 10.3431 13 12 13Z"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </svg>
+          São Paulo, SP
+        </p>
+        <div class="rating">
+          <span class="star">★★★★★</span>
+          <span class="rating-count">(24 avaliações)</span>
+        </div>
+        <button class="contact-btn" id="contactBtn">
+          <svg
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M21 15C21 15.5304 20.7893 16.0391 20.4142 16.4142C20.0391 16.7893 19.5304 17 19 17H7L3 21V5C3 4.46957 3.21071 3.96086 3.58579 3.58579C3.96086 3.21071 4.46957 3 5 3H19C19.5304 3 20.0391 3.21071 20.4142 3.58579C20.7893 3.96086 21 4.46957 21 5V15Z"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </svg>
+          Entrar em Contato
+        </button>
+      </section>
 
-        <!-- Clothes Section -->
-        <section class="clothes-section">
-            <h2 class="section-title">Roupas Disponíveis</h2>
+      <!-- Clothes Section -->
+      <section class="clothes-section">
+        <h2 class="section-title">Roupas Disponíveis</h2>
 
-            <div class="clothes-grid" id="clothesGrid">
-                <!-- Itens serão carregados dinamicamente via JavaScript -->
-                <div class="loading">
-                    <div class="spinner"></div>
-                </div>
-            </div>
-        </section>
+        <div class="clothes-grid" id="clothesGrid">
+          <!-- Itens serão carregados dinamicamente via JavaScript -->
+          <div class="loading">
+            <div class="spinner"></div>
+          </div>
+        </div>
+      </section>
     </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="footer-container">
+        <div class="footer-section">
+          <h3 class="footer-title">StyleShare</h3>
+          <p class="footer-text">
+            Aluguel de roupas e acessórios para todas as ocasiões.
+          </p>
+          <div class="social-links">
+            <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+            <a href="#" class="social-link"
+              ><i class="fab fa-facebook-f"></i
+            ></a>
+            <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+            <a href="#" class="social-link"
+              ><i class="fab fa-pinterest-p"></i
+            ></a>
+          </div>
+        </div>
+
+        <div class="footer-section">
+          <h3 class="footer-title">Links Úteis</h3>
+          <ul class="footer-links">
+            <li><a href="#" class="footer-link">Sobre nós</a></li>
+            <li><a href="#" class="footer-link">Como funciona</a></li>
+            <li><a href="#" class="footer-link">Termos de uso</a></li>
+            <li><a href="#" class="footer-link">Política de privacidade</a></li>
+            <li><a href="#" class="footer-link">Trabalhe conosco</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-section">
+          <h3 class="footer-title">Ajuda</h3>
+          <ul class="footer-links">
+            <li><a href="#" class="footer-link">Central de ajuda</a></li>
+            <li><a href="#" class="footer-link">Perguntas frequentes</a></li>
+            <li><a href="#" class="footer-link">Trocas e devoluções</a></li>
+            <li><a href="#" class="footer-link">Contato</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-section">
+          <h3 class="footer-title">Newsletter</h3>
+          <p class="footer-text">Assine para receber ofertas exclusivas.</p>
+          <form class="newsletter-form">
+            <input
+              type="email"
+              placeholder="Seu e-mail"
+              class="newsletter-input"
+            />
+            <button type="submit" class="newsletter-btn">Assinar</button>
+          </form>
+          <div class="payment-methods">
+            <i class="fab fa-cc-visa"></i>
+            <i class="fab fa-cc-mastercard"></i>
+            <i class="fab fa-cc-paypal"></i>
+            <i class="fab fa-cc-amazon-pay"></i>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p class="copyright">
+          &copy; 2025 StyleShare. Todos os direitos reservados.
+        </p>
+      </div>
+    </footer>
 
     <!-- Font Awesome for icons -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
-    
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Simular dados do anunciante
-            const anunciante = {
-                nome: "Maria Silva",
-                email: "maria.silva@example.com",
-                localizacao: "São Paulo, SP",
-                foto: "https://randomuser.me/api/portraits/women/65.jpg",
-                avaliacao: 5,
-                avaliacoesCount: 24
-            };
-
-            // Simular lista de roupas anunciadas
-            const roupasAnunciadas = [
-                {
-                    id: 1,
-                    titulo: "Vestido Floral Midi",
-                    imagem: "https://images.unsplash.com/photo-1591047139829-d91aecb6caea?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=736&q=80",
-                    preco: 89,
-                    status: "available"
-                },
-                {
-                    id: 2,
-                    titulo: "Terno Slim Preto",
-                    imagem: "https://images.unsplash.com/photo-1539533018447-63fcce2678e4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80",
-                    preco: 120,
-                    status: "available"
-                },
-                {
-                    id: 3,
-                    titulo: "Bolsa de Luxo Dourada",
-                    imagem: "https://images.unsplash.com/photo-1551232864-3f0890e580d9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1374&q=80",
-                    preco: 65,
-                    status: "available"
-                },
-                {
-                    id: 4,
-                    titulo: "Conjunto Esportivo",
-                    imagem: "https://images.unsplash.com/photo-1591047139829-d91aecb6caea?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=736&q=80",
-                    preco: 40,
-                    status: "rented"
-                }
-            ];
-
-            // Função para renderizar as roupas
-            function renderClothes() {
-                const clothesGrid = document.getElementById('clothesGrid');
-                clothesGrid.innerHTML = '';
-
-                if (roupasAnunciadas.length === 0) {
-                    clothesGrid.innerHTML = '<p style="grid-column: 1/-1; text-align: center;">Nenhuma roupa disponível no momento.</p>';
-                    return;
-                }
-
-                roupasAnunciadas.forEach(roupa => {
-                    let statusText, statusClass;
-                    switch(roupa.status) {
-                        case 'available':
-                            statusText = 'Disponível';
-                            statusClass = 'status-available';
-                            break;
-                        case 'rented':
-                            statusText = 'Alugada';
-                            statusClass = 'status-rented';
-                            break;
-                        case 'pending':
-                            statusText = 'Pendente';
-                            statusClass = 'status-pending';
-                            break;
-                    }
-
-                    const itemHTML = `
-                        <div class="clothing-card">
-                            <img src="${roupa.imagem}" alt="${roupa.titulo}" class="clothing-image">
-                            <div class="clothing-info">
-                                <h3 class="clothing-title">${roupa.titulo}</h3>
-                                <div class="clothing-price">R$ ${roupa.preco} <span style="font-size: 0.8rem; color: var(--gray);">/ dia</span></div>
-                                <span class="clothing-status ${statusClass}">${statusText}</span>
-                                <div class="action-buttons">
-                                    <button class="action-btn cart-btn" data-id="${roupa.id}">
-                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                            <path d="M3 3H5L5.4 5M7 13H17L21 5H5.4M7 13L5.4 5M7 13L4.70711 15.2929C4.07714 15.9229 4.52331 17 5.41421 17H17M17 17C15.8954 17 15 17.8954 15 19C15 20.1046 15.8954 21 17 21C18.1046 21 19 20.1046 19 19C19 17.8954 18.1046 17 17 17ZM9 19C9 20.1046 8.10457 21 7 21C5.89543 21 5 20.1046 5 19C5 17.8954 5.89543 17 7 17C8.10457 17 9 17.8954 9 19Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                        </svg>
-                                        Carrinho
-                                    </button>
-                                    <button class="action-btn rent-btn" data-id="${roupa.id}">
-                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                            <path d="M16 11V7C16 4.79086 14.2091 3 12 3C9.79086 3 8 4.79086 8 7V11M5 9H19L20 21H4L5 9Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                        </svg>
-                                        Alugar
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    `;
-                    clothesGrid.innerHTML += itemHTML;
-                });
-
-                // Adicionar eventos aos botões
-                document.querySelectorAll('.cart-btn').forEach(btn => {
-                    btn.addEventListener('click', function() {
-                        const itemId = this.getAttribute('data-id');
-                        alert(`Item ID: ${itemId} adicionado ao carrinho!`);
-                    });
-                });
-
-                document.querySelectorAll('.rent-btn').forEach(btn => {
-                    btn.addEventListener('click', function() {
-                        const itemId = this.getAttribute('data-id');
-                        window.location.href = `pagamento.html?item=${itemId}`;
-                    });
-                });
-            }
-
-            // Simular carregamento assíncrono
-            setTimeout(() => {
-                renderClothes();
-            }, 1000);
-
-            // Botão Entrar em Contato
-            document.getElementById('contactBtn').addEventListener('click', function() {
-                alert('Abrindo chat com o anunciante...');
-            });
-        });
-    </script>
-</body>
+    <script src="../assets/js/advertiser_public.js"></script>
+  </body>
 </html>

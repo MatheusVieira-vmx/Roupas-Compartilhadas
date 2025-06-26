@@ -136,10 +136,6 @@ document.querySelector('.nav-btn i.fa-user')?.closest('button')?.addEventListene
   window.location.href = 'advertiser.html';
 });
 
-// Redireciona para os favoritos
-document.querySelector('.nav-btn i.fa-heart')?.closest('button')?.addEventListener('click', () => {
-  window.location.href = '/favoritos';
-});
 
 // Redireciona para o carrinho
 document.querySelector('.nav-btn i.fa-shopping-bag')?.closest('button')?.addEventListener('click', () => {
