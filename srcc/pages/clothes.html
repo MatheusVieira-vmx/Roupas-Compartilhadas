@@ -11,171 +11,182 @@
     <link rel="stylesheet" href="../assets/css/clothes.css" />
   </head>
   <body>
-    <div class="container">
-      <!-- Header -->
-      <header class="header">
-        <div class="logo">
-          <img
-            src="../assets/images/styleshare-deitado.png"
-            alt="StyleShare Logo"
-          />
+    <!-- Header com animação de pesquisa -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <!-- Logo -->
+                <div class="logo">
+                    <img src="../assets/images/styleshare-deitado.png" alt="StyleShare Logo">
+                </div>
+                
+                <!-- Barra de Pesquisa (com animação) -->
+                <div class="search-wrapper">
+                    <div class="search-container" id="searchContainer">
+                        <input 
+                            type="text" 
+                            placeholder="Busque por vestidos, ternos, acessórios..."
+                            class="search-input"
+                        />
+                        <i class="fas fa-search search-icon" id="searchIcon"></i>
+                    </div>
+                </div>
+                
+                <!-- Ícones de navegação -->
+                <div class="nav-actions">
+                    <button class="nav-btn search-btn" id="searchToggle">
+                        <i class="fas fa-search"></i>
+                    </button>
+                    <button class="nav-btn">
+                        <i class="fas fa-shopping-bag"></i>
+                        <span class="badge">3</span>
+                    </button>
+                </div>
+            </div>
         </div>
-        <div class="nav-actions">
-          <div class="search-container hidden">
-            <input
-              type="text"
-              placeholder="Busque por vestidos, ternos, acessórios..."
+    </header>
+
+    <!-- Conteúdo Principal -->
+    <main class="main-content">
+      <div class="container">
+        <!-- Product Detail -->
+        <div class="product-detail">
+          <div class="product-gallery">
+            <img
+              src="https://images.unsplash.com/photo-1591047139829-d91aecb6caea?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=736&q=80"
+              alt="Vestido Floral Midi"
+              class="main-image"
             />
-            <i class="fas fa-search"></i>
-          </div>
-          <button class="nav-btn search-btn">
-            <i class="fas fa-search"></i>
-          </button>
-          <button class="nav-btn">
-            <i class="far fa-heart"></i>
-          </button>
-          <button class="nav-btn">
-            <i class="fas fa-shopping-bag"></i>
-            <span class="badge">3</span>
-          </button>
-        </div>
-      </header>
-
-      <!-- Product Detail -->
-      <div class="product-detail">
-        <div class="product-gallery">
-          <img
-            src="https://images.unsplash.com/photo-1591047139829-d91aecb6caea?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=736&q=80"
-            alt="Vestido Floral Midi"
-            class="main-image"
-          />
-        </div>
-
-        <div class="product-info">
-          <h1 class="product-title">Vestido Floral Midi</h1>
-          <p class="product-description">
-            Vestido de festa em cetim com detalhes em renda. Ideal para
-            formaturas e casamentos. O vestido possui decote em V, mangas curtas
-            e cós marcado. A estampa floral em tons de vermelho e rosa traz um
-            toque romântico e elegante ao look. Comprimento midi, terminando
-            abaixo do joelho. Perfeito para eventos formais e ocasiões
-            especiais.
-          </p>
-
-          <div class="product-meta">
-            <div class="meta-item">
-              <div class="meta-label">Tamanho</div>
-              <div class="meta-value">M</div>
-            </div>
-            <div class="meta-item">
-              <div class="meta-label">Categoria</div>
-              <div class="meta-value">Vestido de Festa</div>
-            </div>
-            <div class="meta-item">
-              <div class="meta-label">Localização</div>
-              <div class="meta-value">Jardins, São Paulo</div>
-            </div>
-            <div class="meta-item">
-              <div class="meta-label">Condição</div>
-              <div class="meta-value">Excelente</div>
-            </div>
           </div>
 
-          <!-- Calendar Section -->
-          <div class="calendar-section">
-            <h3 class="calendar-title">Disponibilidade para Aluguel</h3>
-            <div class="calendar-nav">
-              <button class="calendar-prev" id="prevMonth">&lt;</button>
-              <div class="calendar-month" id="currentMonth">Junho 2023</div>
-              <button class="calendar-next" id="nextMonth">&gt;</button>
+          <div class="product-info">
+            <h1 class="product-title">Vestido Floral Midi</h1>
+            <p class="product-description">
+              Vestido de festa em cetim com detalhes em renda. Ideal para
+              formaturas e casamentos. O vestido possui decote em V, mangas curtas
+              e cós marcado. A estampa floral em tons de vermelho e rosa traz um
+              toque romântico e elegante ao look. Comprimento midi, terminando
+              abaixo do joelho. Perfeito para eventos formais e ocasiões
+              especiais.
+            </p>
+
+            <div class="product-meta">
+              <div class="meta-item">
+                <div class="meta-label">Tamanho</div>
+                <div class="meta-value">M</div>
+              </div>
+              <div class="meta-item">
+                <div class="meta-label">Categoria</div>
+                <div class="meta-value">Vestido de Festa</div>
+              </div>
+              <div class="meta-item">
+                <div class="meta-label">Localização</div>
+                <div class="meta-value">Jardins, São Paulo</div>
+              </div>
+              <div class="meta-item">
+                <div class="meta-label">Condição</div>
+                <div class="meta-value">Excelente</div>
+              </div>
             </div>
-            <div class="selected-dates" id="selectedDates">
-              Selecione as datas desejadas
+
+            <!-- Calendar Section -->
+            <div class="calendar-section">
+              <h3 class="calendar-title">Disponibilidade para Aluguel</h3>
+              <div class="calendar-nav">
+                <button class="calendar-prev" id="prevMonth">&lt;</button>
+                <div class="calendar-month" id="currentMonth">Junho 2023</div>
+                <button class="calendar-next" id="nextMonth">&gt;</button>
+              </div>
+              <div class="selected-dates" id="selectedDates">
+                Selecione as datas desejadas
+              </div>
+              <table class="calendar" id="calendar">
+                <thead>
+                  <tr>
+                    <th>Dom</th>
+                    <th>Seg</th>
+                    <th>Ter</th>
+                    <th>Qua</th>
+                    <th>Qui</th>
+                    <th>Sex</th>
+                    <th>Sáb</th>
+                  </tr>
+                </thead>
+                <tbody id="calendarBody">
+                  <!-- Calendar will be generated by JavaScript -->
+                </tbody>
+              </table>
             </div>
-            <table class="calendar" id="calendar">
-              <thead>
-                <tr>
-                  <th>Dom</th>
-                  <th>Seg</th>
-                  <th>Ter</th>
-                  <th>Qua</th>
-                  <th>Qui</th>
-                  <th>Sex</th>
-                  <th>Sáb</th>
-                </tr>
-              </thead>
-              <tbody id="calendarBody">
-                <!-- Calendar will be generated by JavaScript -->
-              </tbody>
-            </table>
-          </div>
 
-          <div class="product-price">
-            R$ 89 <span class="price-period">/ dia</span>
-          </div>
+            <div class="product-price">
+              R$ 89 <span class="price-period">/ dia</span>
+            </div>
 
-          <div class="total-price" id="totalPrice">
-            Total: <span>R$ 0</span>
-          </div>
+            <div class="total-price" id="totalPrice">
+              Total: <span>R$ 0</span>
+            </div>
 
-          <div class="action-buttons">
-            <button class="btn btn-outline" id="addToCart">
-              <i class="fas fa-shopping-cart"></i>
-              Adicionar ao Carrinho
-            </button>
-            <button class="btn btn-primary" id="rentNow">
-              <i class="fas fa-bolt"></i>
-              Alugar Agora
-            </button>
+            <div class="action-buttons">
+              <button class="btn btn-outline" id="addToCart">
+                <i class="fas fa-shopping-cart"></i>
+                Adicionar ao Carrinho
+              </button>
+              <button class="btn btn-primary" id="rentNow">
+                <i class="fas fa-bolt"></i>
+                Alugar Agora
+              </button>
+            </div>
           </div>
         </div>
       </div>
     </div>
+    
 
-    <!-- Avaliações -->
-    <div class="reviews-section">
-      <h3 class="reviews-title">Avaliações (4.8)</h3>
-      <div class="reviews-stars">
-        <i class="fas fa-star"></i>
-        <i class="fas fa-star"></i>
-        <i class="fas fa-star"></i>
-        <i class="fas fa-star"></i>
-        <i class="fas fa-star-half-alt"></i>
-      </div>
-      <div class="reviews-list">
-        <div class="review-item">
-          <div class="review-author">Ana Silva</div>
-          <div class="review-stars">
-            <i class="fas fa-star"></i>
-            <i class="fas fa-star"></i>
-            <i class="fas fa-star"></i>
-            <i class="fas fa-star"></i>
-            <i class="fas fa-star"></i>
-          </div>
-          <div class="review-text">
-            Adorei o vestido! Chegou perfeito e exatamente como nas fotos.
-          </div>
-          <div class="review-date">15/06/2023</div>
+      <!-- Avaliações -->
+      <div class="reviews-section">
+        <h3 class="reviews-title">Avaliações (4.8)</h3>
+        <div class="reviews-stars">
+          <i class="fas fa-star"></i>
+          <i class="fas fa-star"></i>
+          <i class="fas fa-star"></i>
+          <i class="fas fa-star"></i>
+          <i class="fas fa-star-half-alt"></i>
         </div>
-        <div class="review-item">
-          <div class="review-author">Carlos Oliveira</div>
-          <div class="review-stars">
-            <i class="fas fa-star"></i>
-            <i class="fas fa-star"></i>
-            <i class="fas fa-star"></i>
-            <i class="fas fa-star"></i>
-            <i class="fas fa-star-half-alt"></i>
+        <div class="reviews-list">
+          <div class="review-item">
+            <div class="review-author">Ana Silva</div>
+            <div class="review-stars">
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+            </div>
+            <div class="review-text">
+              Adorei o vestido! Chegou perfeito e exatamente como nas fotos.
+            </div>
+            <div class="review-date">15/06/2023</div>
           </div>
-          <div class="review-text">
-            Ótimo atendimento e produto de qualidade. Recomendo!
+          <div class="review-item">
+            <div class="review-author">Carlos Oliveira</div>
+            <div class="review-stars">
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star-half-alt"></i>
+            </div>
+            <div class="review-text">
+              Ótimo atendimento e produto de qualidade. Recomendo!
+            </div>
+            <div class="review-date">10/06/2023</div>
           </div>
-          <div class="review-date">10/06/2023</div>
         </div>
+        <button class="btn btn-outline" id="showAllReviews">
+          Ver todas as avaliações
+        </button>
       </div>
-      <button class="btn btn-outline" id="showAllReviews">
-        Ver todas as avaliações
-      </button>
-    </div>
+    </main>
 
     <!-- Footer -->
     <footer class="footer">

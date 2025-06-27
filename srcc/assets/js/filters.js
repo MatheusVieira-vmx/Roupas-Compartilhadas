@@ -46,7 +46,7 @@ document.addEventListener('DOMContentLoaded', function () {
     params.append('maxPrice', maxPriceValue);
     if (location) params.append('location', location);
 
-    window.location.href = `index.html?${params.toString()}`;
+    window.location.href = `home.html?${params.toString()}`;
   });
 
   // Valores iniciais
